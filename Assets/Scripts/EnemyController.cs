@@ -5,8 +5,11 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    public int Health = 100;
+
     private GameObject player;
     private NavMeshAgent agent;
+    private Rigidbody rb;
 
     [Tooltip("Distance from the player at which the enemy will attempt to attack.")]
     public float TryAttackRange;
@@ -16,33 +19,79 @@ public class EnemyController : MonoBehaviour
 
     private bool isAttacking = false;
 
+    public float KnockbackRecoveryTime = 0.5f;
+
+    [SerializeField] private float enemyHeight;
+    [SerializeField] private LayerMask groundMask;
+    public bool IsGrounded;
+
     void Start()
     {
-        try { player = GameObject.FindWithTag("Player"); } 
-        catch(Exception e) {
+        try { player = GameObject.FindWithTag("Player"); }
+        catch (Exception e)
+        {
             Debug.LogException(e);
             Debug.LogError("Player object not found. Make sure the player has the tag 'Player'.");
         }
-        if (!TryGetComponent(out agent)) {
-            Debug.LogError("NavMeshAgent component not found on the enemy.");
-        } 
+        if (!TryGetComponent(out agent)) Debug.LogError("NavMeshAgent component not found on the enemy.");
+        if (!TryGetComponent(out rb)) Debug.LogError("Rigidbody component not found on the enemy.");
     }
 
     void Update()
     {
-        agent.SetDestination(player.transform.position);
+        if (agent.enabled)
+        {
+            agent.SetDestination(player.transform.position);
+        }
 
         if (!isAttacking && Vector3.Distance(transform.position, player.transform.position) <= TryAttackRange)
         {
             StartCoroutine(AttackPlayer());
-            //Debug.Log("Enemy is trying to attack the player!");
         }
     }
 
     public IEnumerator AttackPlayer()
     {
-        agent.isStopped = true; isAttacking = true;
+        if (agent.enabled) agent.isStopped = true;
+        isAttacking = true;
+
         yield return new WaitForSeconds(AttackTime);
-        agent.isStopped = false; isAttacking = false;
+
+        if (agent.enabled) agent.isStopped = false;
+        isAttacking = false;
+    }
+
+    public void Hit(int damage, Vector3 knockbackForce)
+    {
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Die();
+            return;
+        }
+
+        StopCoroutine(AttackPlayer());
+        isAttacking = false;
+        agent.isStopped = true;
+        agent.enabled = false;
+
+        rb.isKinematic = false;
+        rb.AddForce(knockbackForce, ForceMode.Impulse);
+        StartCoroutine(KnockbackRecovery());
+    }
+
+    private IEnumerator KnockbackRecovery()
+    {
+        yield return new WaitForSeconds(KnockbackRecoveryTime);
+        rb.isKinematic = true;
+        agent.enabled = true;
+        agent.Warp(transform.position);
+        agent.isStopped = false;
+    }
+
+    public void Die()
+    {
+        //make call to enemy tracker
+        Destroy(gameObject);
     }
 }
