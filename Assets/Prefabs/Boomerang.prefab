@@ -100,7 +100,6 @@ GameObject:
   m_Component:
   - component: {fileID: 900836801876839332}
   - component: {fileID: 70271956867383249}
-  - component: {fileID: 9015566328511162147}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -142,27 +141,6 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 1
   m_CullingType: 0
---- !u!65 &9015566328511162147
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944822804721052597}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5, y: 0.2, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3131073489833729047
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +152,7 @@ GameObject:
   - component: {fileID: 6870875446199885070}
   - component: {fileID: 3387198202507448578}
   - component: {fileID: 2422330335628454731}
+  - component: {fileID: 3030824063601161272}
   m_Layer: 0
   m_Name: Boomerang
   m_TagString: Untagged
@@ -209,9 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa07914f4e85424ea3f792e89174dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  Damage: 20
   ThrowSpeed: 15
   ReturnSpeed: 25
-  MaxTime: 2
+  MaxTime: 1.5
   HitStopLayerMask:
     serializedVersion: 2
     m_Bits: 63
@@ -242,6 +222,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3030824063601161272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3131073489833729047}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 0.2, z: 1.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7379926171345290795
 GameObject:
   m_ObjectHideFlags: 0

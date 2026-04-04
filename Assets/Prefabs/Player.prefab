@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 964683433777067694}
   - component: {fileID: 7432046596566968116}
   - component: {fileID: 3027015308073649290}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8943170753109964891}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3688277922313109867}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 7290081057802105608}
   - component: {fileID: 9087822149293680530}
   - component: {fileID: 4049567603558437187}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -322,10 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0469cb3757806d419db1a24b7a7761a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  playerInput: {fileID: 9087822149293680530}
-  playerMovement: {fileID: 16564891571302277}
-  rb: {fileID: 4049567603558437187}
-  mainCamera: {fileID: 2694283928834443516}
+  BoomerangPrefab: {fileID: 3131073489833729047, guid: 8e516fc47826e574197fe64ad2d59abd, type: 3}
+  BoomerangCooldown: 2
   stabHitbox: {fileID: 3921843613371193758}
   stabTime: 0.25
   stabCooldown: 0.5
@@ -401,7 +399,7 @@ GameObject:
   - component: {fileID: 1723317200319536267}
   - component: {fileID: 632301010526410166}
   - component: {fileID: 3330436900007997616}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StabHitbox
   m_TagString: StabHitbox
   m_Icon: {fileID: 0}
@@ -494,8 +492,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StabHitbox
   playerMovement: {fileID: 16564891571302277}
   damage: 30
-  knockback: 6
-  dashKnockback: 12
+  knockbackStrength: 6
+  dashKnockbackStrength: 8
   airKnock: 0
 --- !u!65 &632301010526410166
 BoxCollider:
@@ -557,9 +555,9 @@ GameObject:
   - component: {fileID: 3268170432588519071}
   - component: {fileID: 5223583628585050101}
   - component: {fileID: 1695432191992096153}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
