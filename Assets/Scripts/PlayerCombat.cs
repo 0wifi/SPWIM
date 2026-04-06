@@ -4,10 +4,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private GameObject mainCamera;
+    private Camera playerCam;
+    private PlayerInput playerInput;
+    private PlayerMovement playerMovement;
+    private Rigidbody rb;
+
+    public GameObject BoomerangPrefab;
+    private bool isBoomerangOut = false;
+    public float BoomerangCooldown = 2f;
+    private bool isBoomerangOnCooldown = false;
 
     [SerializeField] private GameObject stabHitbox;
     [SerializeField] private float stabTime;
@@ -18,6 +23,11 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
+        playerCam = GetComponentInChildren<Camera>();
+        playerInput = GetComponent<PlayerInput>();
+        playerMovement = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody>();
+
         playerInput.actions["Block"].started += ctx => OnBlockStarted();
         playerInput.actions["Block"].canceled += ctx => OnBlockCanceled();
     }
@@ -52,9 +62,24 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
-    void OnBoomerang()
+    public void OnBoomerang()
     {
-
+        if (!isBoomerangOut && !isBoomerangOnCooldown)
+        {
+            Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
+            isBoomerangOut = true;
+        }
+    }
+    public void BoomerangReturned()
+    {
+        isBoomerangOut = false;
+        StartCoroutine(DoBoomerangCooldown());
+    }
+    private IEnumerator DoBoomerangCooldown()
+    {
+        isBoomerangOnCooldown = true;
+        yield return new WaitForSeconds(BoomerangCooldown); // example cooldown duration
+        isBoomerangOnCooldown = false;
     }
 
 
@@ -66,7 +91,7 @@ public class PlayerCombat : MonoBehaviour
         //If in the air, have the player "dash" forward. This can only be done ONCE, until the player touches the ground again.
         if (playerMovement.IsGrounded == false && canDash == true)
         {
-            rb.AddForce(mainCamera.transform.forward * dashSpeed, ForceMode.Impulse);
+            rb.AddForce(playerCam.transform.forward * dashSpeed, ForceMode.Impulse);
 
             //Cut vertical velocity to prevent vertical movement with the dash
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
