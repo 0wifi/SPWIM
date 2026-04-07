@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float stabTime;
     [SerializeField] private float stabCooldown;
     [SerializeField] private float dashSpeed;
+    [Tooltip("% of players velocity retained after hitting an enemy during an air dash")]
+    [SerializeField] private float dashHitVelocityModifier = 0.25f;
     private bool canStab = true;
     private bool canDash = true;
 
@@ -91,7 +94,7 @@ public class PlayerCombat : MonoBehaviour
         //If in the air, have the player "dash" forward. This can only be done ONCE, until the player touches the ground again.
         if (playerMovement.IsGrounded == false && canDash == true)
         {
-            rb.AddForce(playerCam.transform.forward * dashSpeed, ForceMode.Impulse);
+            rb.linearVelocity = playerCam.transform.forward * dashSpeed;
 
             //Cut vertical velocity to prevent vertical movement with the dash
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
@@ -105,5 +108,14 @@ public class PlayerCombat : MonoBehaviour
         //After the specified cooldown, the player can stab again
         yield return new WaitForSeconds(stabCooldown);
         canStab = true;
+    }
+
+    public void OnHitEnemy()
+    {
+        if (!playerMovement.IsGrounded)
+        {
+            //cut velocity if in the air
+            rb.linearVelocity = rb.linearVelocity * dashHitVelocityModifier;
+        }
     }
 }

@@ -327,7 +327,8 @@ MonoBehaviour:
   stabHitbox: {fileID: 3921843613371193758}
   stabTime: 0.25
   stabCooldown: 0.5
-  dashSpeed: 10
+  dashSpeed: 15
+  dashHitVelocityModifier: 0.25
 --- !u!114 &9087822149293680530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,9 +492,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StabHitbox
   playerMovement: {fileID: 16564891571302277}
+  playerCombat: {fileID: 7290081057802105608}
   damage: 30
   knockbackStrength: 6
-  dashKnockbackStrength: 8
+  dashKnockbackStrength: 12
   airKnock: 0
 --- !u!65 &632301010526410166
 BoxCollider:

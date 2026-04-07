@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     public float AttackTime;
 
     private bool isAttacking = false;
+    private bool canAttack = true;
 
     public float KnockbackRecoveryTime = 0.5f;
 
@@ -52,13 +53,16 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator AttackPlayer()
     {
-        if (agent.enabled) agent.isStopped = true;
-        isAttacking = true;
+        if (canAttack)
+        {
+            if (agent.enabled) agent.isStopped = true;
+            isAttacking = true;
 
-        yield return new WaitForSeconds(AttackTime);
+            yield return new WaitForSeconds(AttackTime);
 
-        if (agent.enabled) agent.isStopped = false;
-        isAttacking = false;
+            if (agent.enabled) agent.isStopped = false;
+            isAttacking = false;
+        }
     }
 
     public void Hit(int damage, Vector3 knockbackForce)
@@ -72,6 +76,7 @@ public class EnemyController : MonoBehaviour
 
         StopCoroutine(AttackPlayer());
         isAttacking = false;
+        canAttack = false;
         agent.isStopped = true;
         agent.enabled = false;
 
@@ -87,6 +92,7 @@ public class EnemyController : MonoBehaviour
         agent.enabled = true;
         agent.Warp(transform.position);
         agent.isStopped = false;
+        canAttack = true;
     }
 
     public void Die()

@@ -35,8 +35,7 @@ public class BoomerangController : MonoBehaviour
 
         if (returning && other.gameObject.CompareTag("Player"))
         {
-            playerCombat.BoomerangReturned();
-            Destroy(gameObject);
+            ReturnedToPlayer();
         }
 
         if(other.gameObject.CompareTag("Enemy"))
@@ -47,6 +46,14 @@ public class BoomerangController : MonoBehaviour
             StartCoroutine(EnemyHitCD(other)); // start cooldown for hitting this enemy again
 
             other.GetComponent<EnemyController>().Hit(20, Vector3.zero);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (returning && other.gameObject.CompareTag("Player"))
+        {
+            ReturnedToPlayer();
         }
     }
 
@@ -73,5 +80,11 @@ public class BoomerangController : MonoBehaviour
                 transform.Translate(ReturnSpeed * Time.deltaTime * directionToPlayer, Space.World);
                 break;
         }
+    }
+
+    private void ReturnedToPlayer()
+    {
+        playerCombat.BoomerangReturned();
+        Destroy(gameObject);
     }
 }
