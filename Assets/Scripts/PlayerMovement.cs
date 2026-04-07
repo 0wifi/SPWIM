@@ -5,7 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
     //General variables
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveForce = 85f;
+    [SerializeField] private float maxSpeed = 8f;
     [SerializeField] private Transform orientation;
     [SerializeField] private Rigidbody rb;
     private Vector3 playerMovement;
@@ -101,11 +102,11 @@ public class PlayerMovement : MonoBehaviour
         //Ground vs. air movement
         if (IsGrounded == true)
         {
-            rb.AddForce(moveDir.normalized * moveSpeed, ForceMode.Force);
+            rb.AddForce(moveDir.normalized * moveForce, ForceMode.Force);
         }
         else
         {
-            rb.AddForce(moveDir.normalized * moveSpeed * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDir.normalized * moveForce * airMultiplier, ForceMode.Force);
         }
     }
 
@@ -117,9 +118,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z); //Current flat velocity
 
         //Limiting current velocity based on the movement speed as a max
-        if (flatVelocity.magnitude > moveSpeed)
+        if (flatVelocity.magnitude > maxSpeed)
         {
-            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            Vector3 limitedVelocity = flatVelocity.normalized * maxSpeed;
             rb.linearVelocity = new Vector3(limitedVelocity.x, rb.linearVelocity.y, limitedVelocity.z);
         }
     }
