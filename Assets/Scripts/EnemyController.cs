@@ -10,12 +10,15 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     private NavMeshAgent agent;
     private Rigidbody rb;
+    [SerializeField] private GameObject attackHitbox;
+    public int AttackDamage;
 
     [Tooltip("Distance from the player at which the enemy will attempt to attack.")]
     public float TryAttackRange;
 
     [Tooltip("Time length of an attempted enemy attack")]
-    public float AttackTime;
+    public float StandWait;
+    public float AttackDelay;
 
     private bool isAttacking = false;
     private bool canAttack = true;
@@ -58,7 +61,11 @@ public class EnemyController : MonoBehaviour
             if (agent.enabled) agent.isStopped = true;
             isAttacking = true;
 
-            yield return new WaitForSeconds(AttackTime);
+            attackHitbox.SetActive(true);
+            yield return new WaitForSeconds(AttackDelay);
+            attackHitbox.SetActive(false);
+
+            yield return new WaitForSeconds(StandWait);
 
             if (agent.enabled) agent.isStopped = false;
             isAttacking = false;
