@@ -10,12 +10,16 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     private NavMeshAgent agent;
     private Rigidbody rb;
+    [SerializeField] private GameObject attackHitbox;
+    public int AttackDamage;
 
     [Tooltip("Distance from the player at which the enemy will attempt to attack.")]
     public float TryAttackRange;
 
     [Tooltip("Time length of an attempted enemy attack")]
-    public float AttackTime;
+    public float AttackWindUptime;
+    public float AttackHitboxTime;
+    public float AttackWindDownTime;
 
     private bool isAttacking = false;
     private bool canAttack = true;
@@ -45,7 +49,7 @@ public class EnemyController : MonoBehaviour
             agent.SetDestination(player.transform.position);
         }
 
-        if (!isAttacking && Vector3.Distance(transform.position, player.transform.position) <= TryAttackRange)
+        if (!isAttacking && canAttack && Vector3.Distance(transform.position, player.transform.position) <= TryAttackRange)
         {
             StartCoroutine(AttackPlayer());
         }
@@ -53,16 +57,19 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator AttackPlayer()
     {
-        if (canAttack)
-        {
-            if (agent.enabled) agent.isStopped = true;
-            isAttacking = true;
+        if (agent.enabled) agent.isStopped = true;
+        isAttacking = true; canAttack = false;
 
-            yield return new WaitForSeconds(AttackTime);
+        yield return new WaitForSeconds(AttackWindUptime);
 
-            if (agent.enabled) agent.isStopped = false;
-            isAttacking = false;
-        }
+        attackHitbox.SetActive(true);
+        yield return new WaitForSeconds(AttackHitboxTime);
+        attackHitbox.SetActive(false);
+
+        yield return new WaitForSeconds(AttackWindDownTime);
+
+        if (agent.enabled) agent.isStopped = false;
+        isAttacking = false; canAttack = true;
     }
 
     public void Hit(int damage, Vector3 knockbackForce)

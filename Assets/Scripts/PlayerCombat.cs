@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
     private Rigidbody rb;
+    [SerializeField] private PlayerHealth playerHealth;
 
     public GameObject BoomerangPrefab;
     private bool isBoomerangOut = false;
@@ -23,6 +24,12 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float dashHitVelocityModifier = 0.25f;
     private bool canStab = true;
     private bool canDash = true;
+
+    private bool isBlocking = false;
+
+    [SerializeField] private GameObject shieldObject;
+    [SerializeField] private float maxDegreesToBlock;
+    [SerializeField] private GameObject cameraObject;
 
     void Start()
     {
@@ -48,29 +55,40 @@ public class PlayerCombat : MonoBehaviour
     //If the player's stab ability is ready, perform it
     void OnAttack()
     {
-        if (canStab == true)
+        if (canStab == true && isBoomerangOut == false)
         {
             StartCoroutine(StabAttack());
             canStab = false;
+
+            isBlocking = false;
+            shieldObject.SetActive(false);
         }
     }
 
     void OnBlockStarted()
     {
-
+        if (canStab == true && isBoomerangOut == false)
+        {
+            isBlocking = true;
+            shieldObject.SetActive(true);
+        }
     }
 
     void OnBlockCanceled()
     {
-
+        isBlocking = false;
+        shieldObject.SetActive(false);
     }
 
     public void OnBoomerang()
     {
-        if (!isBoomerangOut && !isBoomerangOnCooldown)
+        if (!isBoomerangOut && !isBoomerangOnCooldown && canStab == true)
         {
             Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
             isBoomerangOut = true;
+
+            isBlocking = false;
+            shieldObject.SetActive(false);
         }
     }
     public void BoomerangReturned()
@@ -117,5 +135,45 @@ public class PlayerCombat : MonoBehaviour
             //cut velocity if in the air
             rb.linearVelocity = rb.linearVelocity * dashHitVelocityModifier;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //When the player is hit by an enemy attack
+        if (other.gameObject.CompareTag("EnemyAttack"))
+        {
+            if (other.gameObject.TryGetComponent(out EnemyAttackHitbox hitbox))
+            {
+                if (hitbox.HasHitPlayerYet) return; //hitbox has already attempted to hit player in this attack instance
+                hitbox.HasHitPlayerYet = true; 
+
+                if (isBlocking == true) //If blocking, check if the hit was in the right angle, and if so no damage is applied
+                {
+                    //Getting the angular range of the block area
+                    Vector3 a = other.gameObject.transform.position - cameraObject.transform.position;
+                    Vector3 flatA = new Vector3(a.x, 0, a.z);
+                    Vector3 b = cameraObject.transform.forward;
+                    Vector3 flatB = new Vector3(b.x, 0, b.z);
+
+                    //Debug.Log(Vector3.Angle(flatA, flatB));
+
+                    if (Vector3.Angle(flatA, flatB) <= maxDegreesToBlock)
+{
+                        //attack blocked
+
+                    }
+                    else
+                    {
+                        //attack hit
+                        playerHealth.HealthUpdate(hitbox.AttackDamage);
+                    }
+                }
+                else
+                {
+                    playerHealth.HealthUpdate(hitbox.AttackDamage);
+                }
+            }
+        }
+
     }
 }
