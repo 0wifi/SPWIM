@@ -506,7 +506,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   playerInput: {fileID: 4334616535423289819}
-  moveSpeed: 85
+  moveForce: 85
+  maxSpeed: 8
   orientation: {fileID: 4478071953469150738}
   rb: {fileID: 8794189330196528906}
   playerHeight: 2
@@ -514,8 +515,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundDrag: 8
-  jumpForce: 12
-  airMultiplier: 0.12
+  jumpForce: 7
   IsGrounded: 0
 --- !u!114 &2815412521295027521
 MonoBehaviour:
