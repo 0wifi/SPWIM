@@ -55,7 +55,7 @@ public class PlayerCombat : MonoBehaviour
     //If the player's stab ability is ready, perform it
     void OnAttack()
     {
-        if (canStab == true && isBoomerangOut == false)
+        if (canStab == true)
         {
             StartCoroutine(StabAttack());
             canStab = false;
@@ -82,7 +82,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnBoomerang()
     {
-        if (!isBoomerangOut && !isBoomerangOnCooldown && canStab == true)
+        if (!isBoomerangOut && !isBoomerangOnCooldown)
         {
             Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
             isBoomerangOut = true;
