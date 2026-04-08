@@ -144,6 +144,9 @@ public class PlayerCombat : MonoBehaviour
         {
             if (other.gameObject.TryGetComponent(out EnemyAttackHitbox hitbox))
             {
+                if (hitbox.HasHitPlayerYet) return; //hitbox has already attempted to hit player in this attack instance
+                hitbox.HasHitPlayerYet = true; 
+
                 if (isBlocking == true) //If blocking, check if the hit was in the right angle, and if so no damage is applied
                 {
                     //Getting the angular range of the block area
