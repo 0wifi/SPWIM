@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class EnemyController : MonoBehaviour
 {
@@ -19,9 +20,8 @@ public class EnemyController : MonoBehaviour
     [Tooltip("Time length of an attempted enemy attack")]
     public float AttackWindUptime;
     public float AttackHitboxTime;
-    public float AttackWindDownTime;
+    public float AttackCooldown;
 
-    private bool isAttacking = false;
     private bool canAttack = true;
 
     public float KnockbackRecoveryTime = 0.5f;
@@ -29,6 +29,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float enemyHeight;
     [SerializeField] private LayerMask groundMask;
     public bool IsGrounded;
+
+    private Coroutine currentAttackCycle;
+    private Coroutine currentStaggerCycle;
 
     void Start()
     {
@@ -49,16 +52,21 @@ public class EnemyController : MonoBehaviour
             agent.SetDestination(player.transform.position);
         }
 
-        if (!isAttacking && canAttack && Vector3.Distance(transform.position, player.transform.position) <= TryAttackRange)
+        if (currentAttackCycle == null) //if not currently in an attack cycle
         {
-            StartCoroutine(AttackPlayer());
+            if (canAttack && Vector3.Distance(transform.position, player.transform.position) <= TryAttackRange) //if player is in range to attack
+            {
+                currentAttackCycle = StartCoroutine(AttackPlayer());
+            }
         }
     }
 
     public IEnumerator AttackPlayer()
     {
+        //Debug.Log($"<color=green>Enemy attack started</color> {Time.time}");
+
         if (agent.enabled) agent.isStopped = true;
-        isAttacking = true; canAttack = false;
+        canAttack = false;
 
         yield return new WaitForSeconds(AttackWindUptime);
 
@@ -66,10 +74,18 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(AttackHitboxTime);
         attackHitbox.SetActive(false);
 
-        yield return new WaitForSeconds(AttackWindDownTime);
-
         if (agent.enabled) agent.isStopped = false;
-        isAttacking = false; canAttack = true;
+
+        //Debug.Log($"<color=red>Enemy attack ended</color> {Time.time}");
+
+        currentAttackCycle = null;
+        StartCoroutine(AttackCooldownTimer());
+    }
+
+    public IEnumerator AttackCooldownTimer()
+    {
+        yield return new WaitForSeconds(AttackCooldown);
+        canAttack = true;
     }
 
     public void Hit(int damage, Vector3 knockbackForce)
@@ -81,29 +97,46 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        StopCoroutine(AttackPlayer());
-        isAttacking = false;
+        if (currentAttackCycle != null) //CANCEL ATTACK CYCLE
+        {
+            StopCoroutine(currentAttackCycle);
+            currentAttackCycle = null;
+            //Debug.Log($"<color=yellow>Enemy attack canceled</color> {Time.time}");
+        }
+
         canAttack = false;
         agent.isStopped = true;
         agent.enabled = false;
 
         rb.isKinematic = false;
         rb.AddForce(knockbackForce, ForceMode.Impulse);
-        StartCoroutine(KnockbackRecovery());
+
+
+        //start stagger cycle, if already in stagger throw out old one and begin new cycle 
+        if (currentStaggerCycle != null)
+        {
+            StopCoroutine(currentStaggerCycle);
+        }
+        currentStaggerCycle = StartCoroutine(StaggerCycle());
     }
 
-    private IEnumerator KnockbackRecovery()
+    private IEnumerator StaggerCycle()
     {
         yield return new WaitForSeconds(KnockbackRecoveryTime);
         rb.isKinematic = true;
+
         agent.enabled = true;
         agent.Warp(transform.position);
         agent.isStopped = false;
+
         canAttack = true;
+
+        currentStaggerCycle = null;
     }
 
     public void Die()
     {
+        StopAllCoroutines();
         //make call to enemy tracker
         Destroy(gameObject);
     }
