@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     //Jump-related variables
     [SerializeField] private float jumpForce;
-    [SerializeField] private float airMultiplier;
 
     private bool canJump;
     public bool IsGrounded;
@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void Update()
     {
-        SpeedControl();
+        //SpeedControl();
 
         //Calculates movement direction based on the camera's direction
         moveDir = orientation.forward * playerMovement.z + orientation.right * playerMovement.x;
@@ -106,7 +106,23 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.AddForce(moveDir.normalized * moveForce * airMultiplier, ForceMode.Force);
+            if (moveDir.magnitude < 0.1f) 
+                 return;//Only do this if theres an input otherwise math go bad
+
+            Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            Vector3 targetAirSpeed = moveDir.normalized * maxSpeed;
+
+            bool belowSpeedCap = flatVelocity.magnitude < maxSpeed;
+            bool opposingMovement = Vector3.Dot(moveDir.normalized, flatVelocity.normalized) < 0f;
+
+            if (belowSpeedCap || opposingMovement)
+            {
+                // When close to the speed cap, scale force down to avoid overshooting
+                Vector3 velocityDelta = targetAirSpeed - flatVelocity;
+                Vector3 clampedForce = Vector3.ClampMagnitude(velocityDelta, moveForce);
+
+                rb.AddForce(clampedForce, ForceMode.Force);
+            }
         }
     }
 
