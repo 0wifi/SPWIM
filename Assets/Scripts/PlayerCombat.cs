@@ -165,15 +165,21 @@ public class PlayerCombat : MonoBehaviour
                     else
                     {
                         //attack hit
-                        playerHealth.HealthUpdate(hitbox.AttackDamage);
+                        playerHealth.HealthUpdate(false, hitbox.AttackDamage);
                     }
                 }
                 else
                 {
-                    playerHealth.HealthUpdate(hitbox.AttackDamage);
+                    playerHealth.HealthUpdate(false, hitbox.AttackDamage);
                 }
             }
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        playerInput.actions["Block"].started -= ctx => OnBlockStarted();
+        playerInput.actions["Block"].canceled -= ctx => OnBlockCanceled();
     }
 }
