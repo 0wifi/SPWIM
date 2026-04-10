@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] private float regenTime;
     [SerializeField] private int regenRate;
-    private bool isHealing = false;
+    public bool IsHealing = false;
     private bool canHeal = true;
 
 
@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        if (isHealing == true)
+        if (IsHealing == true)
         {
             StartCoroutine(Heal());
         }
@@ -44,12 +44,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnHealStarted()
     {
-        isHealing = true;
+        IsHealing = true;
     }
 
     private void OnHealCanceled()
     {
-        isHealing = false;
+        IsHealing = false;
     }
 
     private IEnumerator Heal()

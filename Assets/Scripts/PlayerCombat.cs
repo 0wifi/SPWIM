@@ -110,7 +110,7 @@ public class PlayerCombat : MonoBehaviour
         stabHitbox.SetActive(true);
 
         //If in the air, have the player "dash" forward. This can only be done ONCE, until the player touches the ground again.
-        if (playerMovement.IsGrounded == false && canDash == true)
+        if (playerMovement.IsGrounded == false && canDash == true && playerHealth.IsHealing == false)
         {
             rb.linearVelocity = playerCam.transform.forward * dashSpeed;
 
