@@ -6,6 +6,12 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] private GameObject howToPlayCanvas; //How 2 Play
     [SerializeField] private GameObject creditCanvas;    // Credits
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void HowToPlay()
     {
         mainCanvas.SetActive(false);
@@ -26,13 +32,8 @@ public class ButtonScript : MonoBehaviour
         if (creditCanvas != null) creditCanvas.SetActive(false);
         mainCanvas.SetActive(true);
     }
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
 
-    public void OnClick()
+    public void Quit()
     {
         Application.Quit();
         Debug.Log("Quit");
