@@ -101,6 +101,7 @@ public class EnemyController : MonoBehaviour
         {
             StopCoroutine(currentAttackCycle);
             currentAttackCycle = null;
+            attackHitbox.SetActive(false);
             //Debug.Log($"<color=yellow>Enemy attack canceled</color> {Time.time}");
         }
 
