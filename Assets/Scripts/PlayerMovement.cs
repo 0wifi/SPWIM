@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private Vector3 playerMovement;
     private Vector3 moveDir;
+    [SerializeField] private PlayerHealth playerHealth;
 
     //Drag-related variables
     [SerializeField] private float playerHeight;
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void OnJump()
     {
-        if (canJump == true)
+        if (canJump == true && playerHealth.IsHealing == false)
         {
             //Reset Y velocity
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -99,30 +100,37 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        //Ground vs. air movement
-        if (IsGrounded == true)
+        if (playerHealth.IsHealing == false)
         {
-            rb.AddForce(moveDir.normalized * moveForce, ForceMode.Force);
+            //Ground vs. air movement
+            if (IsGrounded == true)
+            {
+                rb.AddForce(moveDir.normalized * moveForce, ForceMode.Force);
+            }
+            else
+            {
+                if (moveDir.magnitude < 0.1f)
+                    return;//Only do this if theres an input otherwise math go bad
+
+                Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+                Vector3 targetAirSpeed = moveDir.normalized * maxSpeed;
+
+                bool belowSpeedCap = flatVelocity.magnitude < maxSpeed;
+                bool opposingMovement = Vector3.Dot(moveDir.normalized, flatVelocity.normalized) < 0f;
+
+                if (belowSpeedCap || opposingMovement)
+                {
+                    // When close to the speed cap, scale force down to avoid overshooting
+                    Vector3 velocityDelta = targetAirSpeed - flatVelocity;
+                    Vector3 clampedForce = Vector3.ClampMagnitude(velocityDelta, moveForce);
+
+                    rb.AddForce(clampedForce, ForceMode.Force);
+                }
+            }
         }
         else
         {
-            if (moveDir.magnitude < 0.1f) 
-                 return;//Only do this if theres an input otherwise math go bad
-
-            Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-            Vector3 targetAirSpeed = moveDir.normalized * maxSpeed;
-
-            bool belowSpeedCap = flatVelocity.magnitude < maxSpeed;
-            bool opposingMovement = Vector3.Dot(moveDir.normalized, flatVelocity.normalized) < 0f;
-
-            if (belowSpeedCap || opposingMovement)
-            {
-                // When close to the speed cap, scale force down to avoid overshooting
-                Vector3 velocityDelta = targetAirSpeed - flatVelocity;
-                Vector3 clampedForce = Vector3.ClampMagnitude(velocityDelta, moveForce);
-
-                rb.AddForce(clampedForce, ForceMode.Force);
-            }
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
         }
     }
 

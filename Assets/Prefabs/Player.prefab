@@ -510,6 +510,7 @@ MonoBehaviour:
   maxSpeed: 8
   orientation: {fileID: 4478071953469150738}
   rb: {fileID: 8794189330196528906}
+  playerHealth: {fileID: 8381040609125002598}
   playerHeight: 2
   groundMask:
     serializedVersion: 2
@@ -553,7 +554,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   healthDisplay: {fileID: 0}
-  playerHealth: 100
+  playerHealthMax: 250
+  playerHealth: 250
+  regenTime: 0.1
+  regenRate: 1
+  IsHealing: 0
 --- !u!114 &4334616535423289819
 MonoBehaviour:
   m_ObjectHideFlags: 0
