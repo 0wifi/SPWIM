@@ -7,17 +7,6 @@ public class EnemyDetector : MonoBehaviour
     [SerializeField] private Array enemyList;
     private int remainingEnemies;
     [SerializeField] private TMP_Text playerDisplay;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        FindEnemy();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void FindEnemy()
     {
@@ -32,6 +21,19 @@ public class EnemyDetector : MonoBehaviour
         { 
             Debug.Log(enemyList.ToString());
             playerDisplay.text = "Enemies Remaining: " + enemyList.Length;
+        }
+    }
+
+    public void UpdateEnemyDisplayText(int enemyCount)
+    {
+        if (enemyCount <= 0)
+        {
+            Debug.Log("All Enemies Defeated");
+            playerDisplay.text = "ALL TARGETS DESTROYED";
+        }
+        else
+        {
+            playerDisplay.text = "Enemies Remaining: " + enemyCount;
         }
     }
 }

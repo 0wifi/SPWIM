@@ -101,22 +101,25 @@ public class EnemyController : MonoBehaviour
         {
             StopCoroutine(currentAttackCycle);
             currentAttackCycle = null;
+            attackHitbox.SetActive(false);
             //Debug.Log($"<color=yellow>Enemy attack canceled</color> {Time.time}");
         }
-
-        canAttack = false;
-        agent.isStopped = true;
-        agent.enabled = false;
-
-        rb.isKinematic = false;
-        rb.AddForce(knockbackForce, ForceMode.Impulse);
-
 
         //start stagger cycle, if already in stagger throw out old one and begin new cycle 
         if (currentStaggerCycle != null)
         {
             StopCoroutine(currentStaggerCycle);
         }
+        canAttack = false;
+
+        if (agent.enabled)
+        {
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
+
+        rb.isKinematic = false;
+        rb.AddForce(knockbackForce, ForceMode.Impulse);
         currentStaggerCycle = StartCoroutine(StaggerCycle());
     }
 
@@ -137,7 +140,8 @@ public class EnemyController : MonoBehaviour
     public void Die()
     {
         StopAllCoroutines();
-        //make call to enemy tracker
+        //make call to wave spawner
+        FindFirstObjectByType<WaveSpawningSystem>().WaveEnemyDied(this);
         Destroy(gameObject);
     }
 }

@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("DiedScene");
         }
 
         if (IsHealing == true)
