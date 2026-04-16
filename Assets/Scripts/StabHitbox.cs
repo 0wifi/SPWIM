@@ -8,9 +8,7 @@ public class StabHitbox : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerCombat playerCombat;
     [SerializeField] private int damage;
-    [SerializeField] private int knockbackStrength;
     [SerializeField] private int dashKnockbackStrength;
-    [SerializeField] private int airKnock;
 
     private readonly List<Collider> hitEnemies = new();
 
@@ -31,7 +29,13 @@ public class StabHitbox : MonoBehaviour
             if (hitEnemies.Contains(other)) return; // Skip if this enemy has already been hit by this attack instance
             hitEnemies.Add(other); // Add this enemy to the list of hit enemies
 
-            enemyController.Hit(damage);
+            //apply knockback if player is dashing, otherwise just apply damage
+            if (enemyController.IsGrounded)
+            {
+                Vector3 knockbackDir = (other.gameObject.transform.position - GameObject.FindWithTag("Player").transform.position).normalized;
+                enemyController.Hit(damage, knockbackDir * dashKnockbackStrength);
+            }
+            else enemyController.Hit(damage);
 
             playerCombat.OnHitEnemy();
         }
