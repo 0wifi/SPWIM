@@ -88,8 +88,20 @@ public class EnemyController : MonoBehaviour
         canAttack = true;
     }
 
+    public void Hit(int damage)
+    {
+        // deal damage
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Die();
+            return;
+        }
+    }
+
     public void Hit(int damage, Vector3 knockbackForce)
     {
+        // deal damage
         Health -= damage;
         if (Health <= 0)
         {
@@ -97,6 +109,16 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+        //start stagger cycle, if already in stagger throw out old one and begin new cycle 
+        if (currentStaggerCycle != null)
+        {
+            StopCoroutine(currentStaggerCycle);
+        }
+        currentStaggerCycle = StartCoroutine(StaggerCycle(knockbackForce));
+    }
+
+    private IEnumerator StaggerCycle(Vector3 knockbackForce)
+    {
         if (currentAttackCycle != null) //CANCEL ATTACK CYCLE
         {
             StopCoroutine(currentAttackCycle);
@@ -105,36 +127,29 @@ public class EnemyController : MonoBehaviour
             //Debug.Log($"<color=yellow>Enemy attack canceled</color> {Time.time}");
         }
 
-        //start stagger cycle, if already in stagger throw out old one and begin new cycle 
-        if (currentStaggerCycle != null)
-        {
-            StopCoroutine(currentStaggerCycle);
-        }
-        canAttack = false;
-
-        if (agent.enabled)
+        if (agent.enabled) //stop movement
         {
             agent.isStopped = true;
             agent.enabled = false;
         }
 
-        rb.isKinematic = false;
+        canAttack = false; //disable attacking
+
+        rb.isKinematic = false; //apply knockback
         rb.AddForce(knockbackForce, ForceMode.Impulse);
-        currentStaggerCycle = StartCoroutine(StaggerCycle());
-    }
 
-    private IEnumerator StaggerCycle()
-    {
         yield return new WaitForSeconds(KnockbackRecoveryTime);
-        rb.isKinematic = true;
 
+        rb.isKinematic = true; //end knockback
+
+        //restart movement
         agent.enabled = true;
         agent.Warp(transform.position);
         agent.isStopped = false;
 
-        canAttack = true;
+        canAttack = true; //enable attacking
 
-        currentStaggerCycle = null;
+        currentStaggerCycle = null; //end stagger cycle
     }
 
     public void Die()

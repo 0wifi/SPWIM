@@ -29,6 +29,8 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField] private GameObject shieldObject;
     [SerializeField] private float maxDegreesToBlock;
+    [SerializeField] private float shieldHitKnockbackStrength;
+
     [SerializeField] private GameObject cameraObject;
 
     void Start()
@@ -150,7 +152,7 @@ public class PlayerCombat : MonoBehaviour
                 if (isBlocking == true) //If blocking, check if the hit was in the right angle, and if so no damage is applied
                 {
                     //Getting the angular range of the block area
-                    Vector3 a = other.gameObject.transform.position - cameraObject.transform.position;
+                    Vector3 a = hitbox.enemyController.transform.position - cameraObject.transform.position;
                     Vector3 flatA = new Vector3(a.x, 0, a.z);
                     Vector3 b = cameraObject.transform.forward;
                     Vector3 flatB = new Vector3(b.x, 0, b.z);
@@ -160,6 +162,10 @@ public class PlayerCombat : MonoBehaviour
                     if (Vector3.Angle(flatA, flatB) <= maxDegreesToBlock)
 {
                         //attack blocked
+
+                        //apply stagger to enemy
+                        Vector3 knockbackDir = (other.gameObject.transform.position - GameObject.FindWithTag("Player").transform.position).normalized;
+                        hitbox.enemyController.Hit(0, knockbackDir * shieldHitKnockbackStrength);
 
                     }
                     else

@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class StabHitbox : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement playerMovement; 
-    [SerializeField] private PlayerCombat playerCombat; 
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerCombat playerCombat;
     [SerializeField] private int damage;
     [SerializeField] private int knockbackStrength;
     [SerializeField] private int dashKnockbackStrength;
@@ -21,22 +21,19 @@ public class StabHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (!other.gameObject.CompareTag("Enemy"))
         {
-            if (other.gameObject.TryGetComponent(out EnemyController enemyController))
-            {
-                if (hitEnemies.Contains(other)) return; // Skip if this enemy has already been hit by this attack instance
-                hitEnemies.Add(other); // Add this enemy to the list of hit enemies
+            return;
+        } //if hit non-enemy, thog dont care.
 
-                Vector3 knockbackDir = (other.gameObject.transform.position - GameObject.FindWithTag("Player").transform.position).normalized;
-                knockbackDir.y = airKnock;
+        if (other.gameObject.TryGetComponent(out EnemyController enemyController))
+        {
+            if (hitEnemies.Contains(other)) return; // Skip if this enemy has already been hit by this attack instance
+            hitEnemies.Add(other); // Add this enemy to the list of hit enemies
 
-                Vector3 knockback = playerMovement.IsGrounded ? knockbackDir * knockbackStrength : knockbackDir * dashKnockbackStrength;
+            enemyController.Hit(damage);
 
-                enemyController.Hit(damage, knockback);
-
-                playerCombat.OnHitEnemy();
-            }
+            playerCombat.OnHitEnemy();
         }
     }
 }
