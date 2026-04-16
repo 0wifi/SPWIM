@@ -152,7 +152,7 @@ public class PlayerCombat : MonoBehaviour
                 if (isBlocking == true) //If blocking, check if the hit was in the right angle, and if so no damage is applied
                 {
                     //Getting the angular range of the block area
-                    Vector3 a = other.gameObject.transform.position - cameraObject.transform.position;
+                    Vector3 a = hitbox.enemyController.transform.position - cameraObject.transform.position;
                     Vector3 flatA = new Vector3(a.x, 0, a.z);
                     Vector3 b = cameraObject.transform.forward;
                     Vector3 flatB = new Vector3(b.x, 0, b.z);
