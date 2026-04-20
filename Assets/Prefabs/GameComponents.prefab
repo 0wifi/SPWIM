@@ -609,7 +609,7 @@ MonoBehaviour:
     VolumeScale: 1
   PlayerGotHitSound:
     Clip: {fileID: 8300000, guid: 7984ef5cc077c78408454aaa058aec0f, type: 3}
-    VolumeScale: 0.7
+    VolumeScale: 0.3
   PlayerBlockedHitSound:
     Clip: {fileID: 8300000, guid: 4bc1b631f4abce9409af50ccfa082657, type: 3}
     VolumeScale: 1

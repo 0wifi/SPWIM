@@ -41,7 +41,6 @@ public class AudioManager : MonoBehaviour
     }
     private void Handle_PlayerGotHit()
     {
-        Debug.Log("PLAYER GOT HIT SOUND PLAYING");
         audioSource.PlayOneShot(PlayerGotHitSound.Clip, PlayerGotHitSound.VolumeScale);
     }
     private void Handle_PlayerBlockedHit()
