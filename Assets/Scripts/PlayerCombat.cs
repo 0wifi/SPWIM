@@ -11,6 +11,9 @@ public class PlayerCombat : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private PlayerHealth playerHealth;
 
+    [SerializeField] private Animator leftArmAnimator;
+    [SerializeField] private Animator rightArmAnimator;
+
     public GameObject BoomerangPrefab;
     private bool isBoomerangOut = false;
     public float BoomerangCooldown = 2f;
@@ -59,11 +62,17 @@ public class PlayerCombat : MonoBehaviour
     {
         if (canStab == true)
         {
+            if (rightArmAnimator != null)
+                rightArmAnimator.SetTrigger("Stab");
+
             StartCoroutine(StabAttack());
             canStab = false;
 
             IsBlocking = false;
             shieldObject.SetActive(false);
+
+            if (leftArmAnimator != null)
+                leftArmAnimator.SetBool("IsBlocking", false);
         }
     }
 
@@ -73,6 +82,10 @@ public class PlayerCombat : MonoBehaviour
         {
             IsBlocking = true;
             shieldObject.SetActive(true);
+
+            if (leftArmAnimator != null)
+                leftArmAnimator.SetBool("IsBlocking", true);
+                
             playerHealth.StartCoroutine(playerHealth.ShieldRecharge());
         }
     }
@@ -81,22 +94,43 @@ public class PlayerCombat : MonoBehaviour
     {
         IsBlocking = false;
         shieldObject.SetActive(false);
+
+        if (leftArmAnimator != null)
+            leftArmAnimator.SetBool("IsBlocking", false);
     }
 
     public void OnBoomerang()
     {
         if (!isBoomerangOut && !isBoomerangOnCooldown)
         {
-            Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
-            isBoomerangOut = true;
+            if (leftArmAnimator != null)
+                leftArmAnimator.SetTrigger("ThrowShield");
 
-            IsBlocking = false;
-            shieldObject.SetActive(false);
+            StartCoroutine(ThrowBoomerang());
+
+            if (leftArmAnimator != null)
+                leftArmAnimator.SetBool("IsBlocking", false);
         }
+    }
+
+    private IEnumerator ThrowBoomerang()
+    {
+        isBoomerangOut = true;
+        IsBlocking = false;
+        shieldObject.SetActive(false);
+
+        yield return new WaitForSeconds(.4f);
+
+        Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
+
     }
     public void BoomerangReturned()
     {
         isBoomerangOut = false;
+
+        if (leftArmAnimator != null)
+            leftArmAnimator.SetTrigger("CatchShield");
+
         StartCoroutine(DoBoomerangCooldown());
     }
     private IEnumerator DoBoomerangCooldown()

@@ -13,6 +13,7 @@ public class BoomerangController : MonoBehaviour
 
     private PlayerCombat playerCombat;
     private bool returning = false;
+    private bool hasReturned = false;
 
     [Tooltip("layers that will trigger the boomerang to return to the player")]
     public LayerMask HitStopLayerMask;
@@ -35,7 +36,7 @@ public class BoomerangController : MonoBehaviour
 
         if (returning && other.gameObject.CompareTag("Player"))
         {
-            ReturnedToPlayer();
+            DestroyBoomerang();
         }
 
         if(other.gameObject.CompareTag("Enemy"))
@@ -53,7 +54,7 @@ public class BoomerangController : MonoBehaviour
     {
         if (returning && other.gameObject.CompareTag("Player"))
         {
-            ReturnedToPlayer();
+            DestroyBoomerang();
         }
     }
 
@@ -76,15 +77,30 @@ public class BoomerangController : MonoBehaviour
                 transform.Translate(ThrowSpeed * Time.deltaTime * transform.forward, Space.World);
                 break;
             case true:
-                Vector3 directionToPlayer = (playerCombat.transform.position - transform.position).normalized;
+                Vector3 playerPos = playerCombat.transform.position;
+                Vector3 directionToPlayer = (playerPos - transform.position).normalized;
+
                 transform.Translate(ReturnSpeed * Time.deltaTime * directionToPlayer, Space.World);
+
+                float catchDistance = 7.5f;
+                if (Vector3.Distance(transform.position, playerPos) <= catchDistance)
+                {
+                    ReturnedToPlayer();
+                }
                 break;
         }
     }
 
     private void ReturnedToPlayer()
     {
+        if (hasReturned) return;
+        hasReturned = true;
+
         playerCombat.BoomerangReturned();
+    }
+
+    private void DestroyBoomerang()
+    {
         Destroy(gameObject);
     }
 }
