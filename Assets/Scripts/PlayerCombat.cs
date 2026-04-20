@@ -106,26 +106,23 @@ public class PlayerCombat : MonoBehaviour
             if (leftArmAnimator != null)
                 leftArmAnimator.SetTrigger("ThrowShield");
 
-            StartCoroutine(SpawnBoomerang());
+            StartCoroutine(ThrowBoomerang());
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", false);
-                
-            IsBlocking = false;
-            shieldObject.SetActive(false);
         }
     }
 
-    private IEnumerator SpawnBoomerang()
+    private IEnumerator ThrowBoomerang()
     {
         isBoomerangOut = true;
+        IsBlocking = false;
+        shieldObject.SetActive(false);
 
         yield return new WaitForSeconds(.4f);
 
         Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
 
-        isBlocking = false;
-        shieldObject.SetActive(false);
     }
     public void BoomerangReturned()
     {
