@@ -113,10 +113,11 @@ public class PlayerCombat : MonoBehaviour
 
     private IEnumerator SpawnBoomerang()
     {
+        isBoomerangOut = true;
+
         yield return new WaitForSeconds(.4f);
 
         Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
-        isBoomerangOut = true;
 
         isBlocking = false;
         shieldObject.SetActive(false);
