@@ -565,30 +565,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1163387577910283244, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
-      propertyPath: stabCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2293699376123450763, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
-      propertyPath: near clip plane
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3133875518402344324, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.322
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821627817659654560, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0625
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821627817659654560, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.0017
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378710800584720506, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5898182080562188703, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.533151
