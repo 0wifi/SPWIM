@@ -22,8 +22,12 @@ public class PlayerMovement : MonoBehaviour
     //Jump-related variables
     [SerializeField] private float jumpForce;
 
+    [SerializeField] private Animator leftArmAnimator;
+    [SerializeField] private Animator rightArmAnimator;
+
     private bool canJump;
     public bool IsGrounded;
+    public bool IsMoving;
 
 
     /// <summary>
@@ -47,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
         //X and Y input are applied to player X and Z
         playerMovement.x = inputMovementValue.x;
         playerMovement.z = inputMovementValue.y;
+
+        IsMoving = inputMovementValue != Vector2.zero;
     }
 
     /// <summary>
@@ -93,6 +99,12 @@ public class PlayerMovement : MonoBehaviour
 
             canJump = false; //When off the ground, disable jumping
         }
+
+        if (leftArmAnimator != null)
+            leftArmAnimator.SetBool("IsWalking", IsMoving);
+
+        if (rightArmAnimator != null)
+            rightArmAnimator.SetBool("IsWalking", IsMoving);
     }
 
     /// <summary>
