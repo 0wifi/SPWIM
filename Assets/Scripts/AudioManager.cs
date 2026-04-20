@@ -74,10 +74,16 @@ public class AudioManager : MonoBehaviour
 }
 
 [Serializable]
-class SoundEffect
+struct SoundEffect
 {
     public AudioClip Clip;
 
     [Range(0.0f,1.0f)]
-    public float VolumeScale = 1.0f;
+    public float VolumeScale;
+
+    public SoundEffect(AudioClip clip, float volumeScale = 1.0f)
+    {
+        Clip = clip;
+        VolumeScale = volumeScale;
+    }
 }
