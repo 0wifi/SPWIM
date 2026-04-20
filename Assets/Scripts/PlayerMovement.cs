@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //Setting up player inputs
         //playerInput.currentActionMap.Enable();
+
+        leftArmAnimator.SetFloat("SpinSpeed", 1f);
     }
 
 
