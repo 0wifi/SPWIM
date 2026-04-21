@@ -121,8 +121,10 @@ public class PlayerCombat : MonoBehaviour
 
         yield return new WaitForSeconds(.4f);
 
-        Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
+        GameObject boomerangInstance = Instantiate(BoomerangPrefab, transform.position, playerCam.transform.rotation);
 
+        //Invoke audio event
+        AudioEvents.BoomerangThrown.Invoke(boomerangInstance);
     }
     public void BoomerangReturned()
     {
@@ -130,6 +132,9 @@ public class PlayerCombat : MonoBehaviour
 
         if (leftArmAnimator != null)
             leftArmAnimator.SetTrigger("CatchShield");
+
+        //Invoke audio event
+        AudioEvents.BoomerangCaught.Invoke();
 
         StartCoroutine(DoBoomerangCooldown());
     }
@@ -145,6 +150,9 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StabAttack()
     {
         stabHitbox.SetActive(true);
+
+        //Invoke audio event
+        AudioEvents.PlayerDidAttack.Invoke();
 
         //If in the air, have the player "dash" forward. This can only be done ONCE, until the player touches the ground again.
         if (playerMovement.IsGrounded == false && canDash == true && playerHealth.IsHealing == false)
@@ -196,7 +204,10 @@ public class PlayerCombat : MonoBehaviour
 
                     if (Vector3.Angle(flatA, flatB) <= maxDegreesToBlock)
 {
-                        //attack blocked
+                        //ATTACK BLOCKED
+
+                        //Invoke audio event
+                        AudioEvents.PlayerBlockedHit.Invoke();
 
                         //apply stagger to enemy
                         Vector3 knockbackDir = (other.gameObject.transform.position - GameObject.FindWithTag("Player").transform.position).normalized;
@@ -260,12 +271,21 @@ public class PlayerCombat : MonoBehaviour
                     }
                     else
                     {
-                        //attack hit
+                        //BLOCK MISSED -- ATTACK HIT
+
+                        //Invoke audio event
+                        AudioEvents.PlayerGotHit.Invoke(); 
+
                         playerHealth.HealthUpdate(false, hitbox.AttackDamage);
                     }
                 }
                 else
                 {
+                    //ATTACK HIT
+
+                    //Invoke audio event
+                    AudioEvents.PlayerGotHit.Invoke();
+
                     playerHealth.HealthUpdate(false, hitbox.AttackDamage);
                 }
             }
