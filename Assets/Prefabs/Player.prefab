@@ -220,7 +220,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 4856d19cbb2a73649a01862084b5db00, type: 3}
+  - {fileID: 2100000, guid: 6f6390c04aae9554a81ee8deafd43170, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12851,7 +12851,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 61f8fc7677bc3fa40a6c34729ca747d7, type: 3}
+  - {fileID: 2100000, guid: 75a625316500e97438f4e9bc842d84df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16397,6 +16397,7 @@ MonoBehaviour:
   stabCooldown: 0.5
   dashSpeed: 15
   dashHitVelocityModifier: 0.25
+  IsBlocking: 0
   shieldObject: {fileID: 1640789596595185008}
   maxDegreesToBlock: 45
   shieldHitKnockbackStrength: 0
@@ -16413,9 +16414,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5886ed556f5767544b37379620f34ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  playerCombat: {fileID: 0}
   healthDisplay: {fileID: 0}
   playerHealthMax: 250
   playerHealth: 250
+  ShieldDisplay: {fileID: 0}
+  DrDisplay: {fileID: 0}
+  PlayerShieldMax: 0
+  PlayerShield: 0
+  shieldRechargeDelayStart: 0
+  shieldRechargeRate: 0
+  shieldRechargeDelay: 0
+  shieldBrokenDelay: 0
   regenTime: 0.1
   regenRate: 1
   IsHealing: 0
