@@ -15,6 +15,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator rightArmAnimator;
 
     public GameObject BoomerangPrefab;
+    public CooldownTimer BoomerangCooldownTimer;
     private bool isBoomerangOut = false;
     public float BoomerangCooldown = 2f;
     private bool isBoomerangOnCooldown = false;
@@ -110,6 +111,8 @@ public class PlayerCombat : MonoBehaviour
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", false);
+
+            BoomerangCooldownTimer.Used.Invoke();
         }
     }
 
@@ -136,6 +139,7 @@ public class PlayerCombat : MonoBehaviour
         //Invoke audio event
         AudioEvents.BoomerangCaught.Invoke();
 
+        BoomerangCooldownTimer.StartCooldown.Invoke(BoomerangCooldown);
         StartCoroutine(DoBoomerangCooldown());
     }
     private IEnumerator DoBoomerangCooldown()
