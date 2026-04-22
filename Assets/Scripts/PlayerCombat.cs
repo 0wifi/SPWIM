@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class PlayerCombat : MonoBehaviour
             canStab = false;
 
             IsBlocking = false;
-            shieldObject.SetActive(false);
+            //shieldObject.SetActive(false);
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", false);
@@ -81,7 +82,7 @@ public class PlayerCombat : MonoBehaviour
         if (canStab == true && isBoomerangOut == false)
         {
             IsBlocking = true;
-            shieldObject.SetActive(true);
+            //shieldObject.SetActive(true);
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", true);
@@ -93,7 +94,7 @@ public class PlayerCombat : MonoBehaviour
     void OnBlockCanceled()
     {
         IsBlocking = false;
-        shieldObject.SetActive(false);
+        //shieldObject.SetActive(false);
 
         if (leftArmAnimator != null)
             leftArmAnimator.SetBool("IsBlocking", false);
@@ -117,7 +118,7 @@ public class PlayerCombat : MonoBehaviour
     {
         isBoomerangOut = true;
         IsBlocking = false;
-        shieldObject.SetActive(false);
+        //shieldObject.SetActive(false);
 
         yield return new WaitForSeconds(.4f);
 
@@ -202,28 +203,6 @@ public class PlayerCombat : MonoBehaviour
                         Vector3 knockbackDir = (other.gameObject.transform.position - GameObject.FindWithTag("Player").transform.position).normalized;
                         hitbox.enemyController.Hit(0, knockbackDir * shieldHitKnockbackStrength);
 
-                        //Damage shield and damage the player based on durability
-                        if (playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.75))
-                        {
-                            //No damage
-                        }
-                        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.75) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.5))
-                        {
-                            playerHealth.HealthUpdate(false, Mathf.Ceil(hitbox.AttackDamage * 0.25f));
-                        }
-                        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.5) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.25))
-                        {
-                            playerHealth.HealthUpdate(false, Mathf.Ceil(hitbox.AttackDamage * 0.5f));
-                        }
-                        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.25) && playerHealth.PlayerShield > 0)
-                        {
-                            playerHealth.HealthUpdate(false, Mathf.Ceil(hitbox.AttackDamage * 0.75f));
-                        }
-                        else
-                        {
-                            playerHealth.HealthUpdate(false, hitbox.AttackDamage);
-                        }
-
                         //The actual damaging
                         playerHealth.PlayerShield -= hitbox.AttackDamage;
                         if (playerHealth.PlayerShield <= 0)
@@ -233,30 +212,10 @@ public class PlayerCombat : MonoBehaviour
                         }
 
                         //Shield text update + start the regen process
-                        playerHealth.ShieldDisplay.text = "Shield: " + playerHealth.PlayerShield;
+                        //playerHealth.ShieldDisplay.text = "Shield: " + playerHealth.PlayerShield;
+                        UpdateShieldDamage(hitbox);
+                        UpdateShieldStatus();
                         playerHealth.StartCoroutine(playerHealth.ShieldRecharge());
-
-                        //Damage reduction display update
-                        if (playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.75))
-                        {
-                            playerHealth.DrDisplay.text = "Damage Reduction: 100%";
-                        }
-                        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.75) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.5))
-                        {
-                            playerHealth.DrDisplay.text = "Damage Reduction: 75%";
-                        }
-                        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.5) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.25))
-                        {
-                            playerHealth.DrDisplay.text = "Damage Reduction: 50%";
-                        }
-                        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.25) && playerHealth.PlayerShield > 0)
-                        {
-                            playerHealth.DrDisplay.text = "Damage Reduction: 25%";
-                        }
-                        else
-                        {
-                            playerHealth.DrDisplay.text = "Damage Reduction: BROKEN";
-                        }
                     }
                     else
                     {
@@ -271,6 +230,64 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
+    }
+
+    public void UpdateShieldStatus()
+    {
+        playerHealth.ShieldDisplay.text = "Shield: " + playerHealth.PlayerShield;
+
+        //Change shield text based on current status
+        if (playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.75))
+        {
+            //No damage
+            playerHealth.DrDisplay.text = "Damage Reduction: 100%";
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 1f);
+        }
+        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.75) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.5))
+        {
+            playerHealth.DrDisplay.text = "Damage Reduction: 75%";
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.75f);
+        }
+        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.5) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.25))
+        {
+            playerHealth.DrDisplay.text = "Damage Reduction: 50%";
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.5f);
+        }
+        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.25) && playerHealth.PlayerShield > 0)
+        {
+            playerHealth.DrDisplay.text = "Damage Reduction: 25%";
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.25f);
+        }
+        else
+        {
+            playerHealth.DrDisplay.text = "Damage Reduction: BROKEN";
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0f);
+        }
+    }
+
+    private void UpdateShieldDamage(EnemyAttackHitbox hitbox)
+    {
+        //Damage shield and damage the player based on durability
+        if (playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.75))
+        {
+            //No damage
+        }
+        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.75) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.5))
+        {
+            playerHealth.HealthUpdate(false, Mathf.Ceil(hitbox.AttackDamage * 0.25f));
+        }
+        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.5) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.25))
+        {
+            playerHealth.HealthUpdate(false, Mathf.Ceil(hitbox.AttackDamage * 0.5f));
+        }
+        else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.25) && playerHealth.PlayerShield > 0)
+        {
+            playerHealth.HealthUpdate(false, Mathf.Ceil(hitbox.AttackDamage * 0.75f));
+        }
+        else
+        {
+            playerHealth.HealthUpdate(false, hitbox.AttackDamage);
+        }
     }
 
     private void OnDestroy()
