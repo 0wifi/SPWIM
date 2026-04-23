@@ -15,8 +15,10 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator leftArmAnimator;
     [SerializeField] private Animator rightArmAnimator;
 
+    public CooldownTimer BoomerangAbilityIcon; 
+    public CooldownTimer BlockAbilityIcon; 
+
     public GameObject BoomerangPrefab;
-    public CooldownTimer BoomerangCooldownTimer;
     private bool isBoomerangOut = false;
     public float BoomerangCooldown = 2f;
     private bool isBoomerangOnCooldown = false;
@@ -86,6 +88,7 @@ public class PlayerCombat : MonoBehaviour
         {
             IsBlocking = true;
             //shieldObject.SetActive(true);
+            BlockAbilityIcon.Used.Invoke();
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", true);
@@ -101,6 +104,11 @@ public class PlayerCombat : MonoBehaviour
 
         if (leftArmAnimator != null)
             leftArmAnimator.SetBool("IsBlocking", false);
+
+        if (!shieldBroken)
+        {
+            BlockAbilityIcon.Available.Invoke();
+        }
     }
 
     public void OnBoomerang()
@@ -115,7 +123,7 @@ public class PlayerCombat : MonoBehaviour
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", false);
 
-            BoomerangCooldownTimer.Used.Invoke();
+            BoomerangAbilityIcon.Used.Invoke();
         }
     }
 
@@ -123,6 +131,7 @@ public class PlayerCombat : MonoBehaviour
     {
         isBoomerangOut = true;
         IsBlocking = false;
+        BlockAbilityIcon.Unavailable.Invoke();
         //shieldObject.SetActive(false);
 
         yield return new WaitForSeconds(.4f);
@@ -136,13 +145,18 @@ public class PlayerCombat : MonoBehaviour
     {
         isBoomerangOut = false;
 
+        if (!shieldBroken)
+        {
+            BlockAbilityIcon.Available.Invoke();
+        }
+        BoomerangAbilityIcon.StartCooldown.Invoke(BoomerangCooldown);
+
         if (leftArmAnimator != null)
             leftArmAnimator.SetTrigger("CatchShield");
 
         //Invoke audio event
         AudioEvents.BoomerangCaught.Invoke();
 
-        BoomerangCooldownTimer.StartCooldown.Invoke(BoomerangCooldown);
         StartCoroutine(DoBoomerangCooldown());
     }
     private IEnumerator DoBoomerangCooldown()
@@ -285,6 +299,11 @@ public class PlayerCombat : MonoBehaviour
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.25f);
 
             shieldBroken = false;
+
+            if (!isBoomerangOut)
+            {
+                BlockAbilityIcon.Available.Invoke();
+            }
         }
         else
         {
@@ -292,6 +311,7 @@ public class PlayerCombat : MonoBehaviour
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0f);
 
             shieldBroken = true;
+            BlockAbilityIcon.Unavailable.Invoke();
             OnBlockCanceled();
         }
     }
