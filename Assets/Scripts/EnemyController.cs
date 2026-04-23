@@ -97,17 +97,14 @@ public class EnemyController : MonoBehaviour
             Die();
             return;
         }
+
+        //Invoke audio event
+        AudioEvents.EnemyGotHit.Invoke(gameObject);
     }
 
     public void Hit(int damage, Vector3 knockbackForce)
     {
-        // deal damage
-        Health -= damage;
-        if (Health <= 0)
-        {
-            Die();
-            return;
-        }
+        Hit(damage);
 
         //start stagger cycle, if already in stagger throw out old one and begin new cycle 
         if (currentStaggerCycle != null)
@@ -157,6 +154,9 @@ public class EnemyController : MonoBehaviour
         StopAllCoroutines();
         //make call to wave spawner
         FindFirstObjectByType<WaveSpawningSystem>().WaveEnemyDied(this);
+
+        //invoke audio event
+        AudioEvents.EnemyDied.Invoke(gameObject);
         Destroy(gameObject);
     }
 }
