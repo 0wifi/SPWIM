@@ -37,6 +37,8 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField] private GameObject cameraObject;
 
+    private bool shieldBroken = false;
+
     void Start()
     {
         playerCam = GetComponentInChildren<Camera>();
@@ -79,7 +81,7 @@ public class PlayerCombat : MonoBehaviour
 
     void OnBlockStarted()
     {
-        if (canStab == true && isBoomerangOut == false)
+        if (canStab == true && isBoomerangOut == false && shieldBroken == false)
         {
             IsBlocking = true;
             //shieldObject.SetActive(true);
@@ -277,11 +279,16 @@ public class PlayerCombat : MonoBehaviour
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 25%";
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.25f);
+
+            shieldBroken = false;
         }
         else
         {
             playerHealth.DrDisplay.text = "Damage Reduction: BROKEN";
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0f);
+
+            shieldBroken = true;
+            OnBlockCanceled();
         }
     }
 
