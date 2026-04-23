@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     //Jump-related variables
     [SerializeField] private float jumpForce;
 
-    [SerializeField] private Animator leftArmAnimator;
+    public Animator leftArmAnimator;
     [SerializeField] private Animator rightArmAnimator;
 
     private bool canJump;
