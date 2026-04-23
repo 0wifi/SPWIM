@@ -19,7 +19,7 @@ public class StabHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Enemy"))
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("OilRig"))
         {
             return;
         } //if hit non-enemy, thog dont care.
@@ -38,6 +38,10 @@ public class StabHitbox : MonoBehaviour
             else enemyController.Hit(damage);
 
             playerCombat.OnHitEnemy();
+        }
+        else if (other.gameObject.TryGetComponent(out OilRigController oilRigController))
+        {
+            oilRigController.Hit(damage);
         }
     }
 }
