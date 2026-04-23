@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private TMP_Text healthDisplay;
     [SerializeField] private float playerHealthMax;
     [SerializeField] private float playerHealth;
+    [SerializeField] private PlayerMovement playerMovement;
 
     public TMP_Text ShieldDisplay;
     public TMP_Text DrDisplay;
@@ -118,28 +119,7 @@ public class PlayerHealth : MonoBehaviour
             canRecharge = false;
             PlayerShield += shieldRechargeRate;
 
-            ShieldDisplay.text = "Shield: " + PlayerShield;
-
-            if (PlayerShield >= (PlayerShieldMax * 0.75))
-            {
-                DrDisplay.text = "Damage Reduction: 100%";
-            }
-            else if (PlayerShield < (PlayerShieldMax * 0.75) && PlayerShield >= (PlayerShieldMax * 0.5))
-            {
-                DrDisplay.text = "Damage Reduction: 75%";
-            }
-            else if (PlayerShield < (PlayerShieldMax * 0.5) && PlayerShield >= (PlayerShieldMax * 0.25))
-            {
-                DrDisplay.text = "Damage Reduction: 50%";
-            }
-            else if (PlayerShield < (PlayerShieldMax * 0.25) && PlayerShield > 0)
-            {
-                DrDisplay.text = "Damage Reduction: 25%";
-            }
-            else
-            {
-                DrDisplay.text = "Damage Reduction: BROKEN";
-            }
+            playerCombat.UpdateShieldStatus();
 
             yield return new WaitForSeconds(shieldRechargeDelay);
             canRecharge = true;
@@ -167,6 +147,13 @@ public class PlayerHealth : MonoBehaviour
 
         healthDisplay.text = "Health: " + playerHealth;
     }
+
+    //public void UpdateShieldStatus()
+    //{
+    //    ShieldDisplay.text = "Shield: " + PlayerShield;
+
+
+    //}
 
     private void OnDestroy()
     {

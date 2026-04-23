@@ -30,7 +30,7 @@ public class StabHitbox : MonoBehaviour
             hitEnemies.Add(other); // Add this enemy to the list of hit enemies
 
             //apply knockback if player is dashing, otherwise just apply damage
-            if (enemyController.IsGrounded)
+            if (!playerMovement.IsGrounded)
             {
                 Vector3 knockbackDir = (other.gameObject.transform.position - GameObject.FindWithTag("Player").transform.position).normalized;
                 enemyController.Hit(damage, knockbackDir * dashKnockbackStrength);
