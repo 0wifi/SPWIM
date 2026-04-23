@@ -3,6 +3,8 @@ using System;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
@@ -54,6 +56,16 @@ public class AudioManager : MonoBehaviour
     private void Handle_EnemyDied(GameObject enemy)
     {
         AudioSource.PlayClipAtPoint(EnemyDiedSound.Clip, enemy.transform.position, EnemyDiedSound.VolumeScale);
+
+        //literally just the audiosource playclip at point but i want to change the spacial blend also
+        GameObject oneShotObject = new GameObject("One shot audio");
+        oneShotObject.transform.position = enemy.transform.position;
+        AudioSource audioSource = (AudioSource)oneShotObject.AddComponent(typeof(AudioSource));
+        audioSource.clip = EnemyDiedSound.Clip;
+        audioSource.spatialBlend = 0.95f;
+        audioSource.volume = EnemyDiedSound.VolumeScale;
+        audioSource.Play();
+        Destroy(oneShotObject, EnemyDiedSound.Clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
     private void Handle_BoomerangThrown(GameObject boomerang)
     {
