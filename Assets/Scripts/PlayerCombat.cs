@@ -267,22 +267,22 @@ public class PlayerCombat : MonoBehaviour
         {
             //No damage
             playerHealth.DrDisplay.text = "Damage Reduction: 100%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 1f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 4f);
         }
         else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.75) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.5))
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 75%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.75f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 3f);
         }
         else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.5) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.25))
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 50%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.5f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 2f);
         }
         else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.25) && playerHealth.PlayerShield > 0)
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 25%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.25f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 1f);
 
             shieldBroken = false;
         }
