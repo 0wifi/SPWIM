@@ -84,6 +84,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   IsGrounded: 1
+  damageNumber: {fileID: 9168751563982951513, guid: 237bfe95ab8bb94438a064bf0278c0a5, type: 3}
 --- !u!136 &171502181191780603
 CapsuleCollider:
   m_ObjectHideFlags: 0

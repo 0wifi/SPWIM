@@ -33,6 +33,9 @@ public class EnemyController : MonoBehaviour
     private Coroutine currentAttackCycle;
     private Coroutine currentStaggerCycle;
 
+    [SerializeField] private GameObject damageNumber;
+    private DamageNumber dnScript;
+
     void Start()
     {
         try { player = GameObject.FindWithTag("Player"); }
@@ -112,6 +115,11 @@ public class EnemyController : MonoBehaviour
             StopCoroutine(currentStaggerCycle);
         }
         currentStaggerCycle = StartCoroutine(StaggerCycle(knockbackForce));
+
+        Vector3 newTransform = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+        GameObject dn = Instantiate(damageNumber, newTransform, transform.rotation);
+        dnScript = dn.GetComponent<DamageNumber>();
+        dnScript.UpdateText(damage.ToString());
     }
 
     private IEnumerator StaggerCycle(Vector3 knockbackForce)
