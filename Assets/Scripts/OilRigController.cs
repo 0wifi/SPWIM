@@ -92,6 +92,12 @@ public class OilRigController : MonoBehaviour
     {
         // deal damage
         Health -= damage;
+
+        //Vector3 newTransform = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+        //GameObject dn = Instantiate(damageNumber, newTransform, transform.rotation);
+        //dnScript = dn.GetComponent<DamageNumber>();
+        //dnScript.UpdateText(damage.ToString());
+
         if (Health <= 0)
         {
             Die();

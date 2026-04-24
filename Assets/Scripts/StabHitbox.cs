@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,9 @@ public class StabHitbox : MonoBehaviour
     [SerializeField] private PlayerCombat playerCombat;
     [SerializeField] private int damage;
     [SerializeField] private int dashKnockbackStrength;
+
+    [SerializeField] private GameObject damageNumber;
+    private DamageNumber dnScript;
 
     private readonly List<Collider> hitEnemies = new();
 
@@ -37,11 +41,22 @@ public class StabHitbox : MonoBehaviour
             }
             else enemyController.Hit(damage);
 
+            Vector3 newTransform = new Vector3(enemyController.transform.position.x, enemyController.transform.position.y + 2, enemyController.transform.position.z);
+            GameObject dn = Instantiate(damageNumber, newTransform, transform.rotation);
+            dnScript = dn.GetComponent<DamageNumber>();
+            dnScript.UpdateText(damage.ToString());
+
+
             playerCombat.OnHitEnemy();
         }
         else if (other.gameObject.TryGetComponent(out OilRigController oilRigController))
         {
             oilRigController.Hit(damage);
+
+            Vector3 newTransform = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject dn = Instantiate(damageNumber, newTransform, transform.rotation);
+            dnScript = dn.GetComponent<DamageNumber>();
+            dnScript.UpdateText(damage.ToString());
         }
     }
 }
