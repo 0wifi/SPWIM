@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: eacb6e1f40224284e96cb51e77bb2601, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eacb6e1f40224284e96cb51e77bb2601, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eacb6e1f40224284e96cb51e77bb2601, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eacb6e1f40224284e96cb51e77bb2601, type: 3}
       propertyPath: m_LocalPosition.x
@@ -130,18 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OilRigController
   Health: 100
-  attackHitbox: {fileID: 0}
-  AttackDamage: 0
-  TryAttackRange: 0
-  AttackWindUptime: 0
-  AttackHitboxTime: 0
-  AttackCooldown: 0
-  KnockbackRecoveryTime: 0.5
-  enemyHeight: 0
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
-  IsGrounded: 0
+  damageNumber: {fileID: 9168751563982951513, guid: 237bfe95ab8bb94438a064bf0278c0a5, type: 3}
 --- !u!54 &1640426947757054664
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -51,12 +51,9 @@ public class StabHitbox : MonoBehaviour
         }
         else if (other.gameObject.TryGetComponent(out OilRigController oilRigController))
         {
-            oilRigController.Hit(damage);
-
-            Vector3 newTransform = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            GameObject dn = Instantiate(damageNumber, newTransform, transform.rotation);
-            dnScript = dn.GetComponent<DamageNumber>();
-            dnScript.UpdateText(damage.ToString());
+            oilRigController.Hit(damage, transform.position + transform.forward * 4.0f);
+            
+            //note: damage number spawn moved to oilrig hit() to allow additional check if destructible
         }
     }
 }

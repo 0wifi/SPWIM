@@ -14,12 +14,31 @@ public class WaveSpawningSystem : MonoBehaviour
 
     private List<EnemyController> currentWaveEnemies = new();
     private EnemyDetector EnemyDetector;
-    
+
     public int CurrentWaveIndex { get; private set; } = -1;
+
+    private List<OilRigController> oilRigControllers;
+
+    private bool skipOilRigPhase = false;
 
     private void Start()
     {
         EnemyDetector = FindFirstObjectByType<EnemyDetector>();
+        oilRigControllers = new List<OilRigController>(FindObjectsByType<OilRigController>(FindObjectsSortMode.None));
+
+        if (oilRigControllers.Count == 0)
+        {
+            Debug.LogWarning("No oil rigs found in scene. Wave Spawner will skip oil rig phase.");
+            skipOilRigPhase = true;
+        }
+        else if (oilRigControllers.Count < waves.Count)
+        {
+            Debug.LogError("Not enough oil rigs in scene. Number of oil rigs should match number of waves.");
+        }
+        else if (oilRigControllers.Count != waves.Count)
+        {
+            Debug.LogWarning("Number of oil rigs in scene does not match number of waves");
+        }
 
         BeginNextWave();
     }
@@ -40,7 +59,7 @@ public class WaveSpawningSystem : MonoBehaviour
                 Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
                 GameObject enemyInstance = Instantiate(waveEnemy.EnemyPrefab, spawnPoint.position, Quaternion.identity);
 
-                if(enemyInstance.TryGetComponent(out EnemyController enemyController))
+                if (enemyInstance.TryGetComponent(out EnemyController enemyController))
                 {
                     currentWaveEnemies.Add(enemyController);
                 }
@@ -55,6 +74,12 @@ public class WaveSpawningSystem : MonoBehaviour
         ++CurrentWaveIndex;
         SpawnWave(CurrentWaveIndex);
         enemyDetector.UpdateEnemyDisplayText(currentWaveEnemies.Count);
+
+        //disable oil rig destructible
+        foreach (OilRigController oilRig in oilRigControllers)
+        {
+            oilRig.SetDestructible(false);
+        }
     }
 
     public void WaveEnemyDied(EnemyController enemyController)
@@ -66,15 +91,42 @@ public class WaveSpawningSystem : MonoBehaviour
         {
             Debug.Log("Wave " + CurrentWaveIndex + " cleared!");
 
-            if (CurrentWaveIndex >= waves.Count - 1) //if current wave is the last wave
+            //NOTE: an "end of a wave" is now logistically after an oil rig gets destroyed -- so it gets handled there unless oil rig phase is skipped
+
+            if (!skipOilRigPhase)
             {
-                Debug.Log("All waves cleared.");
-                Invoke(nameof(AllWavesCleared), 2f); //load end scene after 2 seconds
+                foreach (OilRigController oilRig in oilRigControllers)
+                {
+                    oilRig.SetDestructible(true);
+                }
+
+                //continue in OilRigDestroyed() once an oil rig gets destroyed
             }
             else
             {
-                Invoke(nameof(BeginNextWave), 4f); //start next wave after 4 seconds
+                if (CurrentWaveIndex >= waves.Count - 1) //current wave was last wave
+                {
+                    Invoke(nameof(AllWavesCleared), 2.0f);
+                }
+                else //go next wave
+                {
+                    Invoke(nameof(BeginNextWave), 2.0f);
+                }
             }
+        }
+    }
+
+    public void OilRigDestroyed(OilRigController oilRig)
+    {
+        oilRigControllers.Remove(oilRig);
+
+        if (CurrentWaveIndex >= waves.Count - 1) //current wave was last wave
+        {
+            Invoke(nameof(AllWavesCleared), 2.0f);
+        }
+        else //go next wave
+        {
+            Invoke(nameof(BeginNextWave), 2.0f);
         }
     }
     private void AllWavesCleared()
@@ -93,7 +145,8 @@ public struct Wave
 [Serializable]
 public struct WaveEnemy
 {
-    [RequiredType(typeof(EnemyController))] [AllowNesting]
+    [RequiredType(typeof(EnemyController))]
+    [AllowNesting]
     public GameObject EnemyPrefab;
     public int Count;
 }

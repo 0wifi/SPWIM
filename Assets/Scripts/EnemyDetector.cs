@@ -15,7 +15,7 @@ public class EnemyDetector : MonoBehaviour
         if (remainingEnemies <= 0)
         {
             Debug.Log("All Enemies Defeated");
-            playerDisplay.text = "ALL TARGETS DESTROYED";
+            playerDisplay.text = "ALL TARGETS DESTROYED\nNEW TARGET: OIL RIG";
         }
         else 
         { 
@@ -29,7 +29,7 @@ public class EnemyDetector : MonoBehaviour
         if (enemyCount <= 0)
         {
             Debug.Log("All Enemies Defeated");
-            playerDisplay.text = "ALL TARGETS DESTROYED";
+            playerDisplay.text = "ALL TARGETS DESTROYED\nNEW TARGET: OIL RIG";
         }
         else
         {
