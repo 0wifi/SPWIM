@@ -34,11 +34,6 @@ public class BoomerangController : MonoBehaviour
             returning = true;
         }
 
-        if (returning && other.gameObject.CompareTag("Player"))
-        {
-            DestroyBoomerang();
-        }
-
         if(other.gameObject.CompareTag("Enemy"))
         {
             if (hitColliders.Contains(other)) return;
@@ -54,7 +49,7 @@ public class BoomerangController : MonoBehaviour
     {
         if (returning && other.gameObject.CompareTag("Player"))
         {
-            DestroyBoomerang();
+            ReturnedToPlayer();
         }
     }
 
@@ -82,7 +77,7 @@ public class BoomerangController : MonoBehaviour
 
                 transform.Translate(ReturnSpeed * Time.deltaTime * directionToPlayer, Space.World);
 
-                float catchDistance = 7.5f;
+                float catchDistance = 1.0f;
                 if (Vector3.Distance(transform.position, playerPos) <= catchDistance)
                 {
                     ReturnedToPlayer();
@@ -95,8 +90,8 @@ public class BoomerangController : MonoBehaviour
     {
         if (hasReturned) return;
         hasReturned = true;
-
         playerCombat.BoomerangReturned();
+        DestroyBoomerang();
     }
 
     private void DestroyBoomerang()
