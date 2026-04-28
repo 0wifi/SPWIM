@@ -15,8 +15,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator leftArmAnimator;
     [SerializeField] private Animator rightArmAnimator;
 
-    public CooldownTimer BoomerangAbilityIcon; 
-    public CooldownTimer BlockAbilityIcon; 
+    public CooldownTimer BoomerangCooldownTimer; 
+    public CooldownTimer BlockCooldownTimer; 
+    public CooldownTimer AttackCooldownTimer; 
 
     public GameObject BoomerangPrefab;
     private bool isBoomerangOut = false;
@@ -88,7 +89,7 @@ public class PlayerCombat : MonoBehaviour
         {
             IsBlocking = true;
             //shieldObject.SetActive(true);
-            BlockAbilityIcon.Used.Invoke();
+            BlockCooldownTimer.Used.Invoke();
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", true);
@@ -107,7 +108,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (!shieldBroken)
         {
-            BlockAbilityIcon.Available.Invoke();
+            BlockCooldownTimer.Available.Invoke();
         }
     }
 
@@ -123,7 +124,7 @@ public class PlayerCombat : MonoBehaviour
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", false);
 
-            BoomerangAbilityIcon.Used.Invoke();
+            BoomerangCooldownTimer.Used.Invoke();
         }
     }
 
@@ -131,7 +132,7 @@ public class PlayerCombat : MonoBehaviour
     {
         isBoomerangOut = true;
         IsBlocking = false;
-        BlockAbilityIcon.Unavailable.Invoke();
+        BlockCooldownTimer.Unavailable.Invoke();
         //shieldObject.SetActive(false);
 
         yield return new WaitForSeconds(.4f);
@@ -147,9 +148,9 @@ public class PlayerCombat : MonoBehaviour
 
         if (!shieldBroken)
         {
-            BlockAbilityIcon.Available.Invoke();
+            BlockCooldownTimer.Available.Invoke();
         }
-        BoomerangAbilityIcon.StartCooldown.Invoke(BoomerangCooldown);
+        BoomerangCooldownTimer.StartCooldown.Invoke(BoomerangCooldown);
 
         if (leftArmAnimator != null)
             leftArmAnimator.SetTrigger("CatchShield");
@@ -171,6 +172,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StabAttack()
     {
         stabHitbox.SetActive(true);
+        AttackCooldownTimer.Used.Invoke();
 
         //Invoke audio event
         AudioEvents.PlayerDidAttack.Invoke();
@@ -185,6 +187,8 @@ public class PlayerCombat : MonoBehaviour
 
             canDash = false;
         }
+
+        AttackCooldownTimer.StartCooldown.Invoke(stabTime + stabCooldown);
 
         yield return new WaitForSeconds(stabTime);
         stabHitbox.SetActive(false);
@@ -302,7 +306,7 @@ public class PlayerCombat : MonoBehaviour
 
             if (!isBoomerangOut)
             {
-                BlockAbilityIcon.Available.Invoke();
+                BlockCooldownTimer.Available.Invoke();
             }
         }
         else
@@ -311,7 +315,7 @@ public class PlayerCombat : MonoBehaviour
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0f);
 
             shieldBroken = true;
-            BlockAbilityIcon.Unavailable.Invoke();
+            BlockCooldownTimer.Unavailable.Invoke();
             OnBlockCanceled();
         }
     }

@@ -657,7 +657,7 @@ GameObject:
   - component: {fileID: 7970180720125871805}
   - component: {fileID: 5653424071996256156}
   m_Layer: 5
-  m_Name: Image
+  m_Name: UnavailableCross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
