@@ -481,6 +481,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 991227731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &323417073
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8179118422295072484, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_Name
+      value: OilRig (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -30.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 17.092615
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
 --- !u!1001 &330409002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1115,6 +1172,63 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3233474960378519404, guid: a8e98409ec68a2447b817579d0a421f3, type: 3}
+--- !u!1001 &1120004507
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8179118422295072484, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_Name
+      value: OilRig
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 44.596424
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
 --- !u!1001 &1448808729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1387,6 +1501,120 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5088815647214243749, guid: d8b7102ff08872f4e83534c5cb06058e, type: 3}
+--- !u!1001 &1715226582
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8179118422295072484, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_Name
+      value: OilRig (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.83611
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.614373
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -24.331682
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+--- !u!1001 &1777821944
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8179118422295072484, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_Name
+      value: OilRig (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.98714
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -33.86942
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
 --- !u!1 &1796592338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e9e0157311eb0544bb2a69979cef755f, type: 3}
@@ -1526,6 +1754,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 991227731}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1001 &1934119415
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8179118422295072484, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_Name
+      value: OilRig (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 29.93828
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.748037
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.776549
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847814540187931742, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5746dc26d6ab44447913293cd71cb9cc, type: 3}
 --- !u!1 &1984753209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,3 +2356,8 @@ SceneRoots:
   - {fileID: 985043817}
   - {fileID: 1448808729}
   - {fileID: 330409002}
+  - {fileID: 1120004507}
+  - {fileID: 1715226582}
+  - {fileID: 1934119415}
+  - {fileID: 1777821944}
+  - {fileID: 323417073}
