@@ -1162,11 +1162,11 @@ RectTransform:
   - {fileID: 297520579578847193}
   m_Father: {fileID: 4494612172094359815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -572.50006, y: -465.4397}
-  m_SizeDelta: {x: 0, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 150, y: 100}
+  m_SizeDelta: {x: 550, y: 100}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1400997718012745006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1184,8 +1184,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 20
+  m_ChildAlignment: 4
+  m_Spacing: 50
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -2307,6 +2307,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.419541
       objectReference: {fileID: 0}
+    - target: {fileID: 4756664820747108812, guid: 1aa391516844c3346a76e6ece2da3078, type: 3}
+      propertyPath: attackCooldownTimer
+      value: 
+      objectReference: {fileID: 7454072885994788830}
     - target: {fileID: 4791227098355269842, guid: 1aa391516844c3346a76e6ece2da3078, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.000009063476
