@@ -639,7 +639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &333499093
 Transform:
   m_ObjectHideFlags: 0
@@ -1436,13 +1436,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'right
-
+  m_text: 'Right
 
     Click'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
-  m_sharedMaterial: {fileID: -5554051883517607583, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
+  m_sharedMaterial: {fileID: 4241817345570051747, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2484,10 +2483,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Left \n\nClick"
+  m_text: "Left \nClick"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
-  m_sharedMaterial: {fileID: -5554051883517607583, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
+  m_sharedMaterial: {fileID: 4241817345570051747, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2760,8 +2759,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Space
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
-  m_sharedMaterial: {fileID: -5554051883517607583, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
+  m_sharedMaterial: {fileID: 4241817345570051747, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3158,10 +3157,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "W \n\nA   D\n\nS"
+  m_text: "W \nA   D\nS"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
-  m_sharedMaterial: {fileID: -5554051883517607583, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
+  m_sharedMaterial: {fileID: 4241817345570051747, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4122,8 +4121,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Q
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
-  m_sharedMaterial: {fileID: -5554051883517607583, guid: 9d0547fe97e116948b97141e5507a86b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
+  m_sharedMaterial: {fileID: 4241817345570051747, guid: 14908b336cdbd004cb323beb147b9d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
