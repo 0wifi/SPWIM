@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : MonoBehaviour
 {
@@ -36,6 +38,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private GameObject damageNumber;
     private DamageNumber dnScript;
 
+    [SerializeField] private AttackIndicator attackIndicator;
+
     void Start()
     {
         try { player = GameObject.FindWithTag("Player"); }
@@ -53,6 +57,11 @@ public class EnemyController : MonoBehaviour
         if (agent.enabled)
         {
             agent.SetDestination(player.transform.position);
+
+            if (!agent.isStopped && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+            {
+                FaceTarget();
+            }
         }
 
         if (currentAttackCycle == null) //if not currently in an attack cycle
@@ -70,6 +79,8 @@ public class EnemyController : MonoBehaviour
 
         if (agent.enabled) agent.isStopped = true;
         canAttack = false;
+
+        attackIndicator.ShowFor(AttackWindUptime);
 
         yield return new WaitForSeconds(AttackWindUptime);
 
@@ -129,6 +140,8 @@ public class EnemyController : MonoBehaviour
             StopCoroutine(currentAttackCycle);
             currentAttackCycle = null;
             attackHitbox.SetActive(false);
+
+            attackIndicator.Cancel();
             //Debug.Log($"<color=yellow>Enemy attack canceled</color> {Time.time}");
         }
 
@@ -166,5 +179,19 @@ public class EnemyController : MonoBehaviour
         //invoke audio event
         AudioEvents.EnemyDied.Invoke(gameObject);
         Destroy(gameObject);
+    }
+
+    void FaceTarget()
+    {
+        // direction to target
+        Vector3 direction = (agent.destination - transform.position).normalized;
+        direction.y = 0; // flatten vector
+         
+        if (direction != Vector3.zero)
+        {
+            // slerp it up
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5.0f);
+        }
     }
 }

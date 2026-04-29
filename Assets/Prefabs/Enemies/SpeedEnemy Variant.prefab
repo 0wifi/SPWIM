@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 403455156084284948, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 403455156084284948, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 403455156084284948, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 403455156084284948, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 553363094031634300, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_Speed
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 553363094031634300, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_Acceleration
@@ -74,7 +74,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 553363094031634300, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_AngularSpeed
-      value: 400
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 553363094031634300, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1487801518146765735, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: Health
@@ -85,8 +89,12 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1487801518146765735, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
+      propertyPath: TryAttackRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487801518146765735, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: AttackWindUptime
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1852792230916278235, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
       propertyPath: m_Name
