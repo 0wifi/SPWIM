@@ -16,6 +16,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator rightArmAnimator;
 
     public GameObject BoomerangPrefab;
+    public CooldownTimer BoomerangCooldownTimer;
     private bool isBoomerangOut = false;
     public float BoomerangCooldown = 2f;
     private bool isBoomerangOnCooldown = false;
@@ -36,6 +37,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float shieldHitKnockbackStrength;
 
     [SerializeField] private GameObject cameraObject;
+
+    private bool shieldBroken = false;
 
     void Start()
     {
@@ -79,7 +82,7 @@ public class PlayerCombat : MonoBehaviour
 
     void OnBlockStarted()
     {
-        if (canStab == true && isBoomerangOut == false)
+        if (canStab == true && isBoomerangOut == false && shieldBroken == false)
         {
             IsBlocking = true;
             //shieldObject.SetActive(true);
@@ -111,6 +114,8 @@ public class PlayerCombat : MonoBehaviour
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", false);
+
+            BoomerangCooldownTimer.Used.Invoke();
         }
     }
 
@@ -137,6 +142,7 @@ public class PlayerCombat : MonoBehaviour
         //Invoke audio event
         AudioEvents.BoomerangCaught.Invoke();
 
+        BoomerangCooldownTimer.StartCooldown.Invoke(BoomerangCooldown);
         StartCoroutine(DoBoomerangCooldown());
     }
     private IEnumerator DoBoomerangCooldown()
@@ -277,11 +283,16 @@ public class PlayerCombat : MonoBehaviour
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 25%";
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.25f);
+
+            shieldBroken = false;
         }
         else
         {
             playerHealth.DrDisplay.text = "Damage Reduction: BROKEN";
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0f);
+
+            shieldBroken = true;
+            OnBlockCanceled();
         }
     }
 
