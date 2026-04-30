@@ -10,6 +10,11 @@ public class CooldownTimer : MonoBehaviour
     [HideInInspector] public UnityEvent Used;
     [HideInInspector] public UnityEvent Available;
     [HideInInspector] public UnityEvent Unavailable;
+    [HideInInspector] public UnityEvent<bool> UseAlternateIcon;
+
+    public bool hasAlternateIcon;
+    [ShowIf(nameof(hasAlternateIcon))] public Image primaryIcon;
+    [ShowIf(nameof(hasAlternateIcon))] public Image alternateIcon;
 
     [SerializeField] private Image unavailableCross;
     [SerializeField] private Slider slider;
@@ -20,6 +25,7 @@ public class CooldownTimer : MonoBehaviour
         Used.AddListener(SetZero);
         Unavailable.AddListener(SetUnavailable);
         Available.AddListener(SetAvailable);
+        UseAlternateIcon.AddListener(AlternateIcon);
     }
 
     private void SetUnavailable()
@@ -52,5 +58,11 @@ public class CooldownTimer : MonoBehaviour
         while (elapsedTime < length);
 
         SetFull();
+    }
+
+    public void AlternateIcon(bool isAlternate)
+    {
+        primaryIcon.gameObject.SetActive(!isAlternate);
+        alternateIcon.gameObject.SetActive(isAlternate);
     }
 }

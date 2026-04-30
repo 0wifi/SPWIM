@@ -16,6 +16,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float playerHealth;
     [SerializeField] private PlayerMovement playerMovement;
 
+    public CooldownTimer SolarPanelCooldownTimer;
+
     public TMP_Text ShieldDisplay;
     public TMP_Text DrDisplay;
     public float PlayerShieldMax;
@@ -75,11 +77,13 @@ public class PlayerHealth : MonoBehaviour
     private void OnHealStarted()
     {
         IsHealing = true;
+        SolarPanelCooldownTimer.Used.Invoke();
     }
 
     private void OnHealCanceled()
     {
         IsHealing = false;
+        SolarPanelCooldownTimer.Available.Invoke();
     }
 
     private IEnumerator Heal()
