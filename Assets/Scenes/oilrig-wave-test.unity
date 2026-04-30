@@ -663,6 +663,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -18.44
       objectReference: {fileID: 0}
+    - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
+      propertyPath: waves.Array.data[0].EnemyTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
+      propertyPath: waves.Array.data[0].EnemyTypes.Array.data[1].Count
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
+      propertyPath: waves.Array.data[0].EnemyTypes.Array.data[0].EnemyPrefab
+      value: 
+      objectReference: {fileID: 2209146775204413088, guid: 8594de85cb2adab48a7894ed0794737e, type: 3}
+    - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
+      propertyPath: waves.Array.data[0].EnemyTypes.Array.data[1].EnemyPrefab
+      value: 
+      objectReference: {fileID: 1852792230916278235, guid: 8b2ffd8a2e3216942aae2deb88069e0d, type: 3}
     - target: {fileID: 1767167398221385189, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: m_LocalPosition.x
       value: -37.58
