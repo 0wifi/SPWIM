@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
@@ -21,6 +22,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private SoundEffect BoomerangThrownSound;
     [SerializeField] private SoundEffect BoomerangFlyLoopSound;
     [SerializeField] private SoundEffect BoomerangCaughtSound;
+    [SerializeField] private SoundEffect OilRigGotHitSound;
+    [SerializeField] private SoundEffect OilRigDiedSound;
 
     private void Start()
     {
@@ -35,6 +38,8 @@ public class AudioManager : MonoBehaviour
         AudioEvents.EnemyDied       .AddListener(Handle_EnemyDied       );
         AudioEvents.BoomerangThrown .AddListener(Handle_BoomerangThrown );
         AudioEvents.BoomerangCaught .AddListener(Handle_BoomerangCaught );
+        AudioEvents.OilRigGotHit    .AddListener(Handle_OilRigGotHit    );
+        AudioEvents.OilRigDied      .AddListener(Handle_OilRigDied      );
     }
 
     private void Handle_PlayerDidAttack()
@@ -81,6 +86,24 @@ public class AudioManager : MonoBehaviour
     {
         //play caught sound locally
         audioSource.PlayOneShot(BoomerangCaughtSound.Clip, BoomerangCaughtSound.VolumeScale);
+    }
+
+    private void Handle_OilRigGotHit(GameObject oilRig)
+    {
+        AudioSource.PlayClipAtPoint(OilRigGotHitSound.Clip, oilRig.transform.position, OilRigGotHitSound.VolumeScale);
+    }
+
+    private void Handle_OilRigDied(GameObject oilRig)
+    {
+        //literally just the audiosource playclip at point but i want to change the spacial blend also
+        GameObject oneShotObject = new GameObject("One shot audio");
+        oneShotObject.transform.position = oilRig.transform.position;
+        AudioSource audioSource = (AudioSource)oneShotObject.AddComponent(typeof(AudioSource));
+        audioSource.clip = OilRigDiedSound.Clip;
+        audioSource.spatialBlend = 0.75f;
+        audioSource.volume = OilRigDiedSound.VolumeScale;
+        audioSource.Play();
+        Destroy(oneShotObject, OilRigDiedSound.Clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
 }
 
