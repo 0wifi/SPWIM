@@ -1192,6 +1192,12 @@ MonoBehaviour:
   BoomerangCaughtSound:
     Clip: {fileID: 8300000, guid: 88bd787c4a58ed34c839962a09197f54, type: 3}
     VolumeScale: 1
+  OilRigGotHitSound:
+    Clip: {fileID: 8300000, guid: 56b5894d070bee54f96610026fd4f4a2, type: 3}
+    VolumeScale: 1
+  OilRigDiedSound:
+    Clip: {fileID: 8300000, guid: c8028bf72482cd14bb8abdf3accd6f94, type: 3}
+    VolumeScale: 1
 --- !u!1 &4509151783946842078
 GameObject:
   m_ObjectHideFlags: 0

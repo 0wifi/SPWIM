@@ -26,6 +26,9 @@ public class OilRigController : MonoBehaviour
 
     public void Hit(int damage, Vector3 damageNumberPos)
     {
+        //sound effect
+        AudioEvents.OilRigGotHit.Invoke(this.gameObject);
+
         if (IsDestructible)
         {
             // deal damage
@@ -61,6 +64,9 @@ public class OilRigController : MonoBehaviour
     {
         //notify wave spawner
         FindFirstObjectByType<WaveSpawningSystem>().OilRigDestroyed(this);
+
+        //sound effect
+        AudioEvents.OilRigDied.Invoke(this.gameObject);
 
         Destroy(gameObject);
     }
