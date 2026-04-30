@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     //Jump-related variables
     [SerializeField] private float jumpForce;
 
+    [SerializeField] private CooldownTimer attackCooldownTimer;
+
     public Animator leftArmAnimator;
     [SerializeField] private Animator rightArmAnimator;
 
@@ -38,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         //Setting up player inputs
         //playerInput.currentActionMap.Enable();
 
-        leftArmAnimator.SetFloat("SpinSpeed", 1f);
+        leftArmAnimator.SetFloat("SpinSpeed", 4f);
     }
 
 
@@ -85,8 +87,16 @@ public class PlayerMovement : MonoBehaviour
         //Calculates movement direction based on the camera's direction
         moveDir = orientation.forward * playerMovement.z + orientation.right * playerMovement.x;
 
+
+        var previousGrounded = IsGrounded;
         //Check for ground using raycasting, using half the player's height plus a little more
         IsGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+
+        if (previousGrounded != IsGrounded) //grounded status changed
+        {
+            //switch attack ability icon (use alternate if not grounded)
+            attackCooldownTimer.UseAlternateIcon.Invoke(!IsGrounded);
+        }
 
         //Drag control (if on the ground, apply the drag; otherwise don't)
         if (IsGrounded == true)

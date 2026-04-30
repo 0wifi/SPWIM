@@ -15,8 +15,11 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator leftArmAnimator;
     [SerializeField] private Animator rightArmAnimator;
 
+    public CooldownTimer BoomerangCooldownTimer; 
+    public CooldownTimer BlockCooldownTimer; 
+    public CooldownTimer AttackCooldownTimer; 
+
     public GameObject BoomerangPrefab;
-    public CooldownTimer BoomerangCooldownTimer;
     private bool isBoomerangOut = false;
     public float BoomerangCooldown = 2f;
     private bool isBoomerangOnCooldown = false;
@@ -86,6 +89,7 @@ public class PlayerCombat : MonoBehaviour
         {
             IsBlocking = true;
             //shieldObject.SetActive(true);
+            BlockCooldownTimer.Used.Invoke();
 
             if (leftArmAnimator != null)
                 leftArmAnimator.SetBool("IsBlocking", true);
@@ -101,6 +105,11 @@ public class PlayerCombat : MonoBehaviour
 
         if (leftArmAnimator != null)
             leftArmAnimator.SetBool("IsBlocking", false);
+
+        if (!shieldBroken)
+        {
+            BlockCooldownTimer.Available.Invoke();
+        }
     }
 
     public void OnBoomerang()
@@ -123,6 +132,7 @@ public class PlayerCombat : MonoBehaviour
     {
         isBoomerangOut = true;
         IsBlocking = false;
+        BlockCooldownTimer.Unavailable.Invoke();
         //shieldObject.SetActive(false);
 
         yield return new WaitForSeconds(.4f);
@@ -136,13 +146,18 @@ public class PlayerCombat : MonoBehaviour
     {
         isBoomerangOut = false;
 
+        if (!shieldBroken)
+        {
+            BlockCooldownTimer.Available.Invoke();
+        }
+        BoomerangCooldownTimer.StartCooldown.Invoke(BoomerangCooldown);
+
         if (leftArmAnimator != null)
             leftArmAnimator.SetTrigger("CatchShield");
 
         //Invoke audio event
         AudioEvents.BoomerangCaught.Invoke();
 
-        BoomerangCooldownTimer.StartCooldown.Invoke(BoomerangCooldown);
         StartCoroutine(DoBoomerangCooldown());
     }
     private IEnumerator DoBoomerangCooldown()
@@ -157,6 +172,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StabAttack()
     {
         stabHitbox.SetActive(true);
+        AttackCooldownTimer.Used.Invoke();
 
         //Invoke audio event
         AudioEvents.PlayerDidAttack.Invoke();
@@ -171,6 +187,8 @@ public class PlayerCombat : MonoBehaviour
 
             canDash = false;
         }
+
+        AttackCooldownTimer.StartCooldown.Invoke(stabTime + stabCooldown);
 
         yield return new WaitForSeconds(stabTime);
         stabHitbox.SetActive(false);
@@ -267,24 +285,29 @@ public class PlayerCombat : MonoBehaviour
         {
             //No damage
             playerHealth.DrDisplay.text = "Damage Reduction: 100%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 1f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 4f);
         }
         else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.75) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.5))
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 75%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.75f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 3f);
         }
         else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.5) && playerHealth.PlayerShield >= (playerHealth.PlayerShieldMax * 0.25))
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 50%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.5f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 2f);
         }
         else if (playerHealth.PlayerShield < (playerHealth.PlayerShieldMax * 0.25) && playerHealth.PlayerShield > 0)
         {
             playerHealth.DrDisplay.text = "Damage Reduction: 25%";
-            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0.25f);
+            playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 1f);
 
             shieldBroken = false;
+
+            if (!isBoomerangOut)
+            {
+                BlockCooldownTimer.Available.Invoke();
+            }
         }
         else
         {
@@ -292,6 +315,7 @@ public class PlayerCombat : MonoBehaviour
             playerMovement.leftArmAnimator.SetFloat("SpinSpeed", 0f);
 
             shieldBroken = true;
+            BlockCooldownTimer.Unavailable.Invoke();
             OnBlockCanceled();
         }
     }

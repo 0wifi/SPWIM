@@ -8,6 +8,13 @@ public class CooldownTimer : MonoBehaviour
 {
     [HideInInspector] public UnityEvent<float> StartCooldown;
     [HideInInspector] public UnityEvent Used;
+    [HideInInspector] public UnityEvent Available;
+    [HideInInspector] public UnityEvent Unavailable;
+    [HideInInspector] public UnityEvent<bool> UseAlternateIcon;
+
+    public bool hasAlternateIcon;
+    [ShowIf(nameof(hasAlternateIcon))] public Image primaryIcon;
+    [ShowIf(nameof(hasAlternateIcon))] public Image alternateIcon;
 
     [SerializeField] private Image unavailableCross;
     [SerializeField] private Slider slider;
@@ -16,11 +23,28 @@ public class CooldownTimer : MonoBehaviour
     {
         StartCooldown.AddListener((length) => StartCoroutine(DoCooldownSlider(length)));
         Used.AddListener(SetZero);
+        Unavailable.AddListener(SetUnavailable);
+        Available.AddListener(SetAvailable);
+        UseAlternateIcon.AddListener(AlternateIcon);
     }
 
+    private void SetUnavailable()
+    {
+        unavailableCross.gameObject.SetActive(true);
+        SetZero();
+    }
+    private void SetAvailable()
+    {
+        unavailableCross.gameObject.SetActive(false);
+        SetFull();
+    }
     public void SetZero()
     {
-        slider.value = 0f;
+        slider.value = 0.0f;
+    }
+    public void SetFull()
+    {
+        slider.value = 1.0f;
     }
     public IEnumerator DoCooldownSlider(float length)
     {
@@ -33,6 +57,12 @@ public class CooldownTimer : MonoBehaviour
         }
         while (elapsedTime < length);
 
-        slider.value = 1.0f;
+        SetFull();
+    }
+
+    public void AlternateIcon(bool isAlternate)
+    {
+        primaryIcon.gameObject.SetActive(!isAlternate);
+        alternateIcon.gameObject.SetActive(isAlternate);
     }
 }
