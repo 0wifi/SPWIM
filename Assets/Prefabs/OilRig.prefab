@@ -265,6 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OilRigController
   Health: 100
   damageNumber: {fileID: 9168751563982951513, guid: 237bfe95ab8bb94438a064bf0278c0a5, type: 3}
+  explosionVFXPrefab: {fileID: 4510509779795642845, guid: faeae11e270d5784ba313ad02b4ecafe, type: 3}
+  explosionSound: {fileID: 8300000, guid: 88bd787c4a58ed34c839962a09197f54, type: 3}
 --- !u!54 &1640426947757054664
 Rigidbody:
   m_ObjectHideFlags: 0

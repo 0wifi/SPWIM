@@ -14,6 +14,8 @@ public class OilRigController : MonoBehaviour
 
     [SerializeField] private GameObject damageNumber;
 
+    [SerializeField] private GameObject explosionVFXPrefab;
+
     void Start()
     {
         try { player = GameObject.FindWithTag("Player"); }
@@ -64,6 +66,9 @@ public class OilRigController : MonoBehaviour
     {
         //notify wave spawner
         FindFirstObjectByType<WaveSpawningSystem>().OilRigDestroyed(this);
+
+        GameObject explosion = Instantiate(explosionVFXPrefab, transform.position, Quaternion.identity);
+        Destroy(explosion, 5f);
 
         //sound effect
         AudioEvents.OilRigDied.Invoke(this.gameObject);
