@@ -836,6 +836,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -18.44
       objectReference: {fileID: 0}
+    - target: {fileID: 1163387577910283244, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
+      propertyPath: stabCooldown
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.size
       value: 5
@@ -870,11 +874,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.data[3].EnemyTypes.Array.data[0].Count
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.data[3].EnemyTypes.Array.data[1].Count
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.data[3].EnemyTypes.Array.data[2].Count
@@ -886,11 +890,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.data[4].EnemyTypes.Array.data[0].Count
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.data[4].EnemyTypes.Array.data[1].Count
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1598094110319445390, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: waves.Array.data[4].EnemyTypes.Array.data[2].Count
@@ -1047,6 +1051,10 @@ PrefabInstance:
     - target: {fileID: 4624318668258349994, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178817831646051303, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5657927464732946847, guid: d271ddb36516ccc4cb4cd3947b7ae586, type: 3}
       propertyPath: m_LocalPosition.x
